@@ -15,8 +15,8 @@ function Card (props)  {
         )}
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place image"/>
+        <a href="/some/valid/uri">
+          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place"/>
         </a>
       </div>
       <div className="place-card__info">
@@ -39,7 +39,7 @@ function Card (props)  {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <a href="/some/valid/uri">{name}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
