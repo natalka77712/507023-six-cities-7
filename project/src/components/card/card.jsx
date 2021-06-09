@@ -1,9 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import cardProp from './card.prop.js';
+import {Link} from 'react-router-dom';
 
 function Card (props)  {
-
-  const {name, imgPreview, price, rating, type, isPremium} = props;
+  const {offer} = props;
+  const {title, imgPreview, price, rating, type, isPremium, id} = offer;
+  const image = imgPreview[0];
 
   const countRating = (rate) =>  `${rate / 5 * 100}%`;
 
@@ -16,7 +18,7 @@ function Card (props)  {
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/some/valid/uri">
-          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place"/>
+          <img className="place-card__image" src={image} width="260" height="200" alt="Place"/>
         </a>
       </div>
       <div className="place-card__info">
@@ -39,7 +41,7 @@ function Card (props)  {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/some/valid/uri">{name}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -48,12 +50,7 @@ function Card (props)  {
 }
 
 Card.propTypes = {
-  isPremium: PropTypes.bool.isRequired,
-  imgPreview: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  offer: cardProp,
 };
 
 export default Card;
