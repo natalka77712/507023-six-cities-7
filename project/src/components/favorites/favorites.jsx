@@ -3,9 +3,19 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import cardProp from '../card/card.prop';
 import Card from '../card/card';
+import PropTypes from 'prop-types';
 
 function Favorites(props) {
   const {offers} = props;
+
+  const favoritePlaces = [];
+
+  offers.forEach((offer) => {
+    if (offer.isFavorite) {
+      favoritePlaces.push(offer);
+    }
+  });
+
   return (
     <div className="page">
       <Header/>
@@ -25,7 +35,7 @@ function Favorites(props) {
                 </div>
                 <div className="favorites__places">
                   {
-                    offers.map((offer) => <Card offer={offer} key={offer.id} />,
+                    favoritePlaces.map((offer) => <Card offer={offer} key={offer.id} />,
                     )
                   }
                 </div>
@@ -42,5 +52,7 @@ function Favorites(props) {
 export default Favorites;
 
 Favorites.propTypes = {
-  offers: cardProp,
+  offers: PropTypes.arrayOf(
+    cardProp,
+  ).isRequired,
 };

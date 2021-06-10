@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Card from '../card/card';
 import cardProp from '../card/card.prop';
+import PropTypes from 'prop-types';
 
 function CardList (props) {
   const {offers} = props;
@@ -22,7 +23,9 @@ function CardList (props) {
 }
 
 CardList.propTypes = {
-  offers: cardProp,
+  offers: PropTypes.arrayOf(
+    cardProp,
+  ).isRequired,
 };
 
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import CardList from '../cardlist/card-list';
-import {array, arrayOf, bool, number, shape, string} from 'prop-types';
+import PropTypes from 'prop-types';
 import Header from '../header/header';
+import cardProp from '../card/card.prop';
 
 function Main (props) {
   const {offers} = props;
@@ -89,17 +90,9 @@ function Main (props) {
 }
 
 Main.propTypes = {
-  offers: arrayOf(
-    shape({
-      id: number.isRequired,
-      title: string.isRequired,
-      type: string.isRequired,
-      imgPreview: array.isRequired,
-      price: number.isRequired,
-      isPremium: bool.isRequired,
-      rating: number.isRequired,
-    }),
-  ),
+  offers: PropTypes.arrayOf(
+    cardProp,
+  ).isRequired,
 };
 
 export default Main;

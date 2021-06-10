@@ -20,7 +20,7 @@ export const reviews = [
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 21,
       isPro: true,
-      name: 'Anne-Mary',
+      name: 'Angelina',
     },
   },
   {
@@ -29,7 +29,7 @@ export const reviews = [
     id: 3001,
     rating: 3.0,
     user: {
-      avatarUrl: 'mg/avatar-angelina.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 31,
       isPro: true,
       name: 'Anne-Mary',
