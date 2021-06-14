@@ -1,25 +1,21 @@
 import React from 'react';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import cardProp from '../card/card.prop';
-import Card from '../card/card';
 import PropTypes from 'prop-types';
+import Card from "../card/card";
+import cardProp from '../card/card.prop';
+import Footer from "../footer/footer";
 
-function Favorites(props) {
-  const {offers} = props;
+const Favorites = ({offers}) => {
 
-  const favoritePlaces = [];
+  const favouriteList = [];
 
-  offers.forEach((offer) => {
-    if (offer.isFavorite) {
-      favoritePlaces.push(offer);
+  offers.forEach((place) => {
+    if (place.isFavorite) {
+      favouriteList.push(place);
     }
   });
 
   return (
-    <div className="page">
-      <Header/>
-
+    <>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -35,8 +31,14 @@ function Favorites(props) {
                 </div>
                 <div className="favorites__places">
                   {
-                    favoritePlaces.map((offer) => <Card offer={offer} key={offer.id} />,
-                    )
+                    favouriteList.map((offer) => {
+                      return (
+                        <Card
+                          offer={offer}
+                          key={offer.id}
+                        />
+                      );
+                    })
                   }
                 </div>
               </li>
@@ -45,9 +47,9 @@ function Favorites(props) {
         </div>
       </main>
       <Footer/>
-    </div>
+    </>
   );
-}
+};
 
 export default Favorites;
 

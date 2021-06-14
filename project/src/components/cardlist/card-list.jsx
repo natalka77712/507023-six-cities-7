@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
 function CardList (props) {
   const {offers} = props;
 
-  const [, setCardActive] = useState(offers[0]);
+  const [, setCardActive] = useState(offers.id);
 
-  const handleCardMouseOver = (offer) => {
-    setCardActive(offer);
+  const handleCardMouseOver = (id) => {
+    setCardActive(id);
   };
 
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        offers.map((offer) => <Card offer={offer} handleCardMouseOver={handleCardMouseOver} key={offer.id} />,
+        offers.map((offer) => <Card offer={offer} onCardMouseOver={() => handleCardMouseOver(offer.id)} key={offer.id} />,
         )
       }
     </div>
@@ -26,6 +26,7 @@ CardList.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
+  onCardMouseOver: PropTypes.func
 };
 
 
