@@ -26,7 +26,6 @@ CardList.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
-  onCardMouseOver: PropTypes.func
 };
 
 

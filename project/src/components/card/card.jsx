@@ -53,7 +53,7 @@ function Card (props)  {
 
 Card.propTypes = {
   offer: cardProp,
-  onCardMouseOver: PropTypes.func
+  onCardMouseOver: PropTypes.func,
 };
 
 export default Card;

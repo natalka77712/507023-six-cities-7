@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from "../card/card";
+import Card from '../card/card';
 import cardProp from '../card/card.prop';
-import Footer from "../footer/footer";
+import Footer from '../footer/footer';
 
-const Favorites = ({offers}) => {
+function Favorites ({offers}) {
 
   const favouriteList = [];
 
@@ -31,14 +31,8 @@ const Favorites = ({offers}) => {
                 </div>
                 <div className="favorites__places">
                   {
-                    favouriteList.map((offer) => {
-                      return (
-                        <Card
-                          offer={offer}
-                          key={offer.id}
-                        />
-                      );
-                    })
+                    favouriteList.map((offer) => <Card offer={offer} key={offer.id} />,
+                    )
                   }
                 </div>
               </li>
@@ -49,7 +43,7 @@ const Favorites = ({offers}) => {
       <Footer/>
     </>
   );
-};
+}
 
 export default Favorites;
 

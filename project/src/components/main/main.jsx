@@ -1,5 +1,5 @@
 import React from 'react';
-import CardList from '../cardlist/card-list';
+import CardList from '../card-list/card-list';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import cardProp from '../card/card.prop';
