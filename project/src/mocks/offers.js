@@ -1,9 +1,13 @@
-import {Cities} from '../const';
 
 export const offers = [
   {
     id: 1,
-    city: Cities.AMSTERDAM,
+    city: 'Amsterdam',
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
     isPremium: true,
     isFavorite: false,
     imgPreview: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg' ],
@@ -24,7 +28,12 @@ export const offers = [
   },
   {
     id: 2,
-    city: Cities.AMSTERDAM,
+    city: 'Amsterdam',
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
     isPremium: true,
     isFavorite: true,
     imgPreview: ['img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-02.jpg' ],
@@ -45,7 +54,12 @@ export const offers = [
   },
   {
     id: 3,
-    city: Cities.COLOGNE,
+    city: 'Amsterdam',
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8,
+    },
     isPremium: false,
     isFavorite: false,
     imgPreview: ['img/apartment-02.jpg', 'img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/apartment-0`.jpg'],
@@ -66,7 +80,12 @@ export const offers = [
   },
   {
     id: 4,
-    city: Cities.DUSSELDORF,
+    city: 'Amsterdam',
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8,
+    },
     isPremium: true,
     isFavorite: true,
     imgPreview: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/apartment-0`.jpg'],

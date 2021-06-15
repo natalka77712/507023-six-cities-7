@@ -3,6 +3,7 @@ import CardList from '../card-list/card-list';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import cardProp from '../card/card.prop';
+import Map from '../map/map';
 
 function Main (props) {
   const {offers} = props;
@@ -79,7 +80,9 @@ function Main (props) {
                 </div>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map offers={offers} />
+                </section>
               </div>
             </div>
           </div>
