@@ -1,34 +1,16 @@
 import React from 'react';
-import Card from '../card/card';
-import {arrayOf, bool, number, shape, string} from 'prop-types';
+import CardList from '../card-list/card-list';
+import PropTypes from 'prop-types';
+import Header from '../header/header';
+import cardProp from '../card/card.prop';
 
 function Main (props) {
-  const {cards} = props;
+  const {offers} = props;
+
   return (
     <div>
       <div className="page page--gray page--main">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <a href="/some/valid/uri" className="header__logo-link header__logo-link--active">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-                </a>
-              </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="/some/valid/uri">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </header>
+        <Header/>
 
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
@@ -78,7 +60,7 @@ function Main (props) {
                   <span className="places__sorting-type" tabIndex="0">
                     Popular
                     <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
+                      <use xlinkHref="#icon-arrow-select"/>
                     </svg>
                   </span>
                   <ul className="places__options places__options--custom places__options--opened">
@@ -90,8 +72,9 @@ function Main (props) {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {
-                    cards.map((card) => <Card key = {card.id} name={card.name} imgPreview={card.imgPreview} price={card.price} rating={card.rating} type={card.type} isPremium={card.isPremium}/>,
-                    )
+                    <CardList
+                      offers={offers}
+                    />
                   }
                 </div>
               </section>
@@ -106,18 +89,10 @@ function Main (props) {
   );
 }
 
-Main.propTypes  = {
-  cards: arrayOf(
-    shape({
-      id: number.isRequired,
-      name: string.isRequired,
-      type: string.isRequired,
-      imgPreview: string.isRequired,
-      price: number.isRequired,
-      isPremium: bool.isRequired,
-    }),
-  ),
+Main.propTypes = {
+  offers: PropTypes.arrayOf(
+    cardProp,
+  ).isRequired,
 };
-
 
 export default Main;

@@ -1,23 +1,27 @@
 import React from 'react';
+import cardProp from './card.prop.js';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function Card (props)  {
+  const {offer, onCardMouseOver} = props;
+  const {title, imgPreview, price, rating, type, isPremium, id} = offer;
+  const image = imgPreview[0];
 
-  const {name, imgPreview, price, rating, type, isPremium} = props;
 
-  const countRating = (rate) =>  `${rate / 5 * 100}%`;
+  const countRating = (rate) => `${rate / 5 * 100}%`;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={onCardMouseOver}>
       <div className="place-card__mark">
         {isPremium && (
           <span>Premium</span>
         )}
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/some/valid/uri">
-          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place"/>
-        </a>
+        <Link to={`/offer/${id}`}>{title}
+          <img className="place-card__image" src={image} width="260" height="200" alt="Place"/>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -39,7 +43,7 @@ function Card (props)  {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/some/valid/uri">{name}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -48,12 +52,8 @@ function Card (props)  {
 }
 
 Card.propTypes = {
-  isPremium: PropTypes.bool.isRequired,
-  imgPreview: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  offer: cardProp,
+  onCardMouseOver: PropTypes.func,
 };
 
 export default Card;
