@@ -89,7 +89,7 @@ export const offers = [
     isPremium: true,
     isFavorite: true,
     imgPreview: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/apartment-0`.jpg'],
-    title: 'Canal View Prinsengracht',
+    title: 'Canal View',
     description: 'The elegant rooms at the Hotel Pullman Cologne include air conditioning, a flat-screen TV and a modern bathroom with a bath and shower.',
     type: 'Apartment',
     rating: 5.0,

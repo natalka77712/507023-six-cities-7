@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CardList from '../card-list/card-list';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import cardProp from '../card/card.prop';
 import Map from '../map/map';
+import {Path} from '../../const';
+import {NavLink} from 'react-router-dom';
 
-function Main (props) {
-  const {offers} = props;
+function Main ({offers}) {
+  const [activeCard, setActiveCard] = useState(null);
 
   return (
     <div>
@@ -19,34 +21,34 @@ function Main (props) {
             <section className="locations container">
               <ul className="locations__list tabs__list">
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
                     <span>Paris</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
                     <span>Cologne</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
                     <span>Brussels</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item tabs__item--active" to={ Path.MAIN }>
                     <span>Amsterdam</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
                     <span>Hamburg</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="/some/valid/uri">
+                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
                     <span>Dusseldorf</span>
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </section>
@@ -75,13 +77,14 @@ function Main (props) {
                   {
                     <CardList
                       offers={offers}
+                      setActiveCard={setActiveCard}
                     />
                   }
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} />
+                  <Map offers={offers}  activeCard={activeCard}/>
                 </section>
               </div>
             </div>

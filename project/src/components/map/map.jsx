@@ -1,21 +1,25 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
+import PropTypes from 'prop-types';
 import cardProp from '../card/card.prop';
 
 import 'leaflet/dist/leaflet.css';
-import PropTypes from 'prop-types';
+import {PinSettings} from '../../const';
 
-function Map (props) {
-  const {offers} = props;
+function Map ({offers, activeCard}) {
+
   const CITY = [52.38333, 4.9];
   const ZOOM = 12;
 
-  const customIcon = leaflet.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [30, 30],
+  const mapRef = useRef();
+
+  const defaultCustomPin = leaflet.icon({
+    iconUrl: PinSettings.DEFAULT_IMG,
   });
 
-  const mapRef = useRef();
+  const activeCustomPin = leaflet.icon({
+    iconUrl: PinSettings.ACTIVE_IMG,
+  });
 
   useEffect(() => {
     mapRef.current = leaflet.map('map', {
@@ -34,7 +38,6 @@ function Map (props) {
     mapRef.current.setView(CITY, ZOOM);
 
     offers.forEach((offer) => {
-
       leaflet
         .marker(
           {
@@ -42,24 +45,28 @@ function Map (props) {
             lng: offer.location.longitude,
           },
           {
-            icon: customIcon,
+            icon: (offer.id === activeCard) ? activeCustomPin : defaultCustomPin,
           },
         )
         .addTo(mapRef.current)
         .bindPopup(offer.title);
     });
+
+    return () => {
+      mapRef.current.remove();
+    };
   });
 
   return (
-    <div id='map' style={{height: '100%'}} ref={mapRef}></div>
+    <div id='map' style={{height: '100%'}}/>
   );
-
 }
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
+  activeCard: PropTypes.number,
 };
 
 export default Map;
