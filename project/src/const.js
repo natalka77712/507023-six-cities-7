@@ -6,11 +6,7 @@ export const Path = {
   ERROR: '/404',
 };
 
-export const Cities = {
-  PARIS: 'Paris',
-  COLOGNE: 'Cologne',
-  BRUSSELS: 'Brussels',
-  AMSTERDAM: 'Amsterdam',
-  HAMBURG: 'Hamburg',
-  DUSSELDORF: 'Dusseldorf',
+export const PinSettings = {
+  DEFAULT_IMG: 'img/pin.svg',
+  ACTIVE_IMG: 'img/pin-active.svg',
 };
