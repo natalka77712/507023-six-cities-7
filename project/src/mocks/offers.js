@@ -1,16 +1,22 @@
-
 export const offers = [
   {
     id: 1,
-    city: 'Amsterdam',
-    location: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
-      zoom: 8,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
     },
     isPremium: true,
     isFavorite: false,
-    imgPreview: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg' ],
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 13,
+    },
+    imgPreview: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg'],
     title: 'Beautiful & luxurious apartment at great location',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     type: 'Apartment',
@@ -28,15 +34,22 @@ export const offers = [
   },
   {
     id: 2,
-    city: 'Amsterdam',
-    location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
-      zoom: 8,
+    city: {
+      location: {
+        latitude: 53.370216,
+        longitude: 5.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
     },
     isPremium: true,
     isFavorite: true,
-    imgPreview: ['img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-02.jpg' ],
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 13,
+    },
+    imgPreview: ['img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/studio-01.jpg'],
     title: 'Wood and stone place',
     description: 'Situated in Amsterdam, within 2.2 km of Amsterdam RAI and 2.5 km of Royal Theater Carré, Modern Houseboat Apartment in Amsterdam with Terrace offers accommodation with free WiFi, air conditioning and a terrace.',
     type: 'Private room',
@@ -54,15 +67,22 @@ export const offers = [
   },
   {
     id: 3,
-    city: 'Amsterdam',
-    location: {
-      latitude: 52.3909553943508,
-      longitude: 4.929309666406198,
-      zoom: 8,
+    city: {
+      location: {
+        latitude: 54.370216,
+        longitude: 6.895168,
+        zoom: 10,
+      },
+      name: 'Paris',
     },
     isPremium: false,
     isFavorite: false,
-    imgPreview: ['img/apartment-02.jpg', 'img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/apartment-0`.jpg'],
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 13,
+    },
+    imgPreview: ['img/apartment-02.jpg', 'img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/room.jpg'],
     title: 'Canal View Prinsengracht',
     description: 'The elegant rooms at the Hotel Pullman Cologne include air conditioning, a flat-screen TV and a modern bathroom with a bath and shower.',
     type: 'Apartment',
@@ -80,15 +100,22 @@ export const offers = [
   },
   {
     id: 4,
-    city: 'Amsterdam',
-    location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
-      zoom: 8,
+    city: {
+      location: {
+        latitude: 51.370216,
+        longitude: 3.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
     },
     isPremium: true,
     isFavorite: true,
-    imgPreview: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg', 'img/apartment-0`.jpg'],
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 13,
+    },
+    imgPreview: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/studio-01.jpg', 'img/room.jpg'],
     title: 'Canal View',
     description: 'The elegant rooms at the Hotel Pullman Cologne include air conditioning, a flat-screen TV and a modern bathroom with a bath and shower.',
     type: 'Apartment',
@@ -105,3 +132,5 @@ export const offers = [
     },
   },
 ];
+
+

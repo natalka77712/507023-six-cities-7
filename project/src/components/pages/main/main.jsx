@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import CardList from '../card-list/card-list';
 import PropTypes from 'prop-types';
-import Header from '../header/header';
-import cardProp from '../card/card.prop';
-import Map from '../map/map';
-import {Path} from '../../const';
+import Header from '../../header/header';
+import cardProp from '../../card/card.prop';
+import Map from '../../map/map';
+import {PlacesListType, Path} from '../../../const';
 import {NavLink} from 'react-router-dom';
+import NearPlacesList from '../../near-places-list/near-places-list';
 
 function Main ({offers}) {
   const [activeCard, setActiveCard] = useState(null);
@@ -73,18 +73,11 @@ function Main ({offers}) {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {
-                    <CardList
-                      offers={offers}
-                      setActiveCard={setActiveCard}
-                    />
-                  }
-                </div>
+                <NearPlacesList offers={offers} setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers}  activeCard={activeCard}/>
+                  <Map offers={offers} activeCard={activeCard}/>
                 </section>
               </div>
             </div>

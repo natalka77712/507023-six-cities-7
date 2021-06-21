@@ -2,25 +2,22 @@ import React from 'react';
 import cardProp from './card.prop.js';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {countRating} from '../../utils';
 
 
-function Card ({offer, setActiveCard})  {
+function Card ({offer, setActiveCard, isRoomPage})  {
   const {title, imgPreview, price, rating, type, isPremium, id} = offer;
   const image = imgPreview[0];
 
-
-  const countRating = (rate) => `${rate / 5 * 100}%`;
-
-  const handlePinHover = setActiveCard ?
-    {
-      onMouseEnter: () => setActiveCard(id),
-
-      onMouseLeave: () => setActiveCard(null),
-    } :
-    {};
-
   return (
-    <article className="cities__place-card place-card" {...handlePinHover}>
+    <article
+      className={
+        `place-card
+        ${isRoomPage ? 'near-places__card' : 'cities__place-card'}`
+      }
+      onMouseEnter={() => setActiveCard(id)}
+      onMouseLeave={() => setActiveCard('')}
+    >
       <div className="place-card__mark">
         {isPremium &&
         <div className="place-card__mark">
@@ -63,6 +60,7 @@ function Card ({offer, setActiveCard})  {
 Card.propTypes = {
   offer: cardProp,
   setActiveCard: PropTypes.func,
+  isRoomPage: PropTypes.bool.isRequired,
 };
 
 export default Card;

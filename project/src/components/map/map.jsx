@@ -5,13 +5,18 @@ import cardProp from '../card/card.prop';
 
 import 'leaflet/dist/leaflet.css';
 import {PinSettings} from '../../const';
+import useMap from '../../hooks/use-map/use-map';
 
-function Map ({offers, activeCard}) {
+const CITY = {
+  latitude: 52.38333,
+  longitude: 4.9,
+  zoom: 12,
+};
 
-  const CITY = [52.38333, 4.9];
-  const ZOOM = 12;
+function Map ({offers, activeCard, initialPosition = CITY}) {
 
-  const mapRef = useRef();
+  const mapRef = useRef(null);
+  const map = useMap(mapRef, initialPosition);
 
   const defaultCustomPin = leaflet.icon({
     iconUrl: PinSettings.DEFAULT_IMG,
@@ -22,43 +27,24 @@ function Map ({offers, activeCard}) {
   });
 
   useEffect(() => {
-    mapRef.current = leaflet.map('map', {
-      center: CITY,
-      zoom: ZOOM,
-      zoomControl: false,
-      marker: true,
-    });
-
-    leaflet
-      .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      })
-      .addTo(mapRef.current);
-
-    mapRef.current.setView(CITY, ZOOM);
-
-    offers.forEach((offer) => {
-      leaflet
-        .marker(
-          {
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
-          },
-          {
-            icon: (offer.id === activeCard) ? activeCustomPin : defaultCustomPin,
-          },
-        )
-        .addTo(mapRef.current)
-        .bindPopup(offer.title);
-    });
-
-    return () => {
-      mapRef.current.remove();
-    };
-  });
+    if (map) {
+      offers.forEach((offer) => {
+        leaflet
+          .marker(
+            {
+              lat: offer.location.latitude,
+              lng: offer.location.longitude,
+            },
+            {
+              icon: (offer.id === activeCard) ? activeCustomPin : defaultCustomPin,
+            })
+          .addTo(map);
+      });
+    }
+  }, [map, offers, activeCard, activeCustomPin, defaultCustomPin]);
 
   return (
-    <div id='map' style={{height: '100%'}}/>
+    <div id='map' style={{height: '100%'}} ref={mapRef}/>
   );
 }
 
@@ -66,7 +52,11 @@ Map.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
-  activeCard: PropTypes.number,
+  activeCard: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  initialPosition: PropTypes.objectOf(PropTypes.number.isRequired),
 };
 
 export default Map;

@@ -4,6 +4,12 @@ import PropTypes, {array, bool, number, string} from 'prop-types';
 export default PropTypes.shape({
   id: number.isRequired,
   title: string.isRequired,
+  city: PropTypes.shape(
+    {
+      location: PropTypes.objectOf(PropTypes.number.isRequired),
+      name: PropTypes.string.isRequired,
+    },
+  ),
   location: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
