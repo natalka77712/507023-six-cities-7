@@ -1,10 +1,11 @@
 import React from 'react';
 import reviewItemProp from './review-item.prop';
+import {countRating, formatDate} from '../../utils';
 
 function ReviewItem (props) {
   const {review} = props;
 
-  const {comment, date, id, user} = review;
+  const {comment, date, id, user, rating} = review;
 
   return (
     <li className="reviews__item" key={id}>
@@ -17,14 +18,15 @@ function ReviewItem (props) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}/>
+            <span style={{width: countRating(rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+
+        <time className="reviews__time" dateTime="2019-04-24">{formatDate(date)}</time>
       </div>
     </li>
   );

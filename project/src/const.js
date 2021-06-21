@@ -10,3 +10,9 @@ export const PinSettings = {
   DEFAULT_IMG: 'img/pin.svg',
   ACTIVE_IMG: 'img/pin-active.svg',
 };
+
+export const PlacesListType = {
+  MAIN_PAGE: 'main',
+  ROOM_PAGE: 'room',
+};
+
