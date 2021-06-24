@@ -16,3 +16,5 @@ export const PlacesListType = {
   ROOM_PAGE: 'room',
 };
 
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const INITIAL_CITY = CITIES[0];

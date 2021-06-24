@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../header/header';
 import cardProp from '../../card/card.prop';
 import Map from '../../map/map';
-import {PlacesListType, Path} from '../../../const';
-import {NavLink} from 'react-router-dom';
+import {PlacesListType} from '../../../const';
 import NearPlacesList from '../../near-places-list/near-places-list';
+import CityList from '../../city-list/city-list';
+import {ActionCreator} from '../../../store/action';
+import {connect} from 'react-redux';
 
-function Main ({offers}) {
+function Main ({ offers, city, onCitySelect}) {
   const [activeCard, setActiveCard] = useState(null);
+
+  useEffect(() =>{
+    onCitySelect(city);
+  }, [onCitySelect, city]);
 
   return (
     <div>
@@ -19,45 +25,14 @@ function Main ({offers}) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
-                    <span>Paris</span>
-                  </NavLink>
-                </li>
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
-                    <span>Cologne</span>
-                  </NavLink>
-                </li>
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
-                    <span>Brussels</span>
-                  </NavLink>
-                </li>
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item tabs__item--active" to={ Path.MAIN }>
-                    <span>Amsterdam</span>
-                  </NavLink>
-                </li>
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
-                    <span>Hamburg</span>
-                  </NavLink>
-                </li>
-                <li className="locations__item">
-                  <NavLink className="locations__item-link tabs__item" to={ Path.MAIN }>
-                    <span>Dusseldorf</span>
-                  </NavLink>
-                </li>
-              </ul>
+              <CityList activeCity={city} getActiveCity={onCitySelect}/>
             </section>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} aces to stay in {city}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -92,6 +67,22 @@ Main.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
+  city: PropTypes.string.isRequired,
+  onCitySelect: PropTypes.func.isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  city: state.city,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onCitySelect(city) {
+    dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.filteredOffers());
+  },
+});
+
+export {Main};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
