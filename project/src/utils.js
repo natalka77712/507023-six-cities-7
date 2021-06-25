@@ -23,3 +23,7 @@ function getShuffledArray(array) {
 }
 
 export const nearPlaces = getShuffledArray(offers).slice(1);
+
+export function filterOffers (city, places) {
+  return places.filter((offer) => offer.city.name === city);
+}

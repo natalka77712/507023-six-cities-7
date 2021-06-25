@@ -16,7 +16,7 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Path.MAIN} render={()=><Main offers={offers}/>}/>
+        <Route exact path={Path.MAIN} render={()=><Main />}/>
         <Route exact path={Path.LOGIN} render={()=><SignIn/>}/>
         <Route exact path={Path.FAVORITES} render={()=><Favorites offers={offers}/>}/>
         <Route exact path={Path.OFFER} render={()=><Room reviews={reviews} offers={offers} nearPlaces={nearPlaces}/>}/>

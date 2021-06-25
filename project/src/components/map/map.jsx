@@ -27,9 +27,10 @@ function Map ({offers, activeCard, initialPosition = CITY}) {
   });
 
   useEffect(() => {
+    const markers = [];
     if (map) {
       offers.forEach((offer) => {
-        leaflet
+        const marker = leaflet
           .marker(
             {
               lat: offer.location.latitude,
@@ -37,10 +38,16 @@ function Map ({offers, activeCard, initialPosition = CITY}) {
             },
             {
               icon: (offer.id === activeCard) ? activeCustomPin : defaultCustomPin,
-            })
-          .addTo(map);
+            });
+        markers.push(marker);
+        marker.addTo(map);
       });
     }
+    return () => {
+      markers.forEach((marker) => {
+        marker.remove();
+      });
+    };
   }, [map, offers, activeCard, activeCustomPin, defaultCustomPin]);
 
   return (
