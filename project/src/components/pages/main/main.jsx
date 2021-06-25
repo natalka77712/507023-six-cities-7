@@ -8,6 +8,8 @@ import NearPlacesList from '../../near-places-list/near-places-list';
 import CityList from '../../city-list/city-list';
 import {ActionCreator} from '../../../store/action';
 import {connect} from 'react-redux';
+import PlacesSorting from '../../places-sorting/places-sorting';
+import {setSorting} from '../../../utils';
 
 function Main ({ offers, city, onCitySelect}) {
   const [activeCard, setActiveCard] = useState(null);
@@ -33,21 +35,7 @@ function Main ({ offers, city, onCitySelect}) {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} aces to stay in {city}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
-                    Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"/>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                    <li className="places__option" tabIndex="0">Price: low to high</li>
-                    <li className="places__option" tabIndex="0">Price: high to low</li>
-                    <li className="places__option" tabIndex="0">Top rated first</li>
-                  </ul>
-                </form>
+                <PlacesSorting/>
                 <NearPlacesList offers={offers} setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
@@ -72,7 +60,7 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: setSorting(state.offers, state.activeSort),
   city: state.city,
 });
 

@@ -131,6 +131,39 @@ export const offers = [
       name: 'Max',
     },
   },
+  {
+    id: 5,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: 'Paris',
+    },
+    isPremium: true,
+    isFavorite: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 13,
+    },
+    imgPreview: ['img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/studio-01.jpg'],
+    title: 'Wood and stone place',
+    description: 'The elegant rooms at the Hotel Pullman Cologne include air conditioning, a flat-screen TV and a modern bathroom with a bath and shower.',
+    type: 'Apartment',
+    rating: 4.0,
+    bedrooms: 3,
+    maxAdults: 5,
+    price: 120,
+    goods: ['Heating', 'Kitchen', 'Fridge', 'Washing machine', 'Dishwasher', 'Towels', 'Iron', 'Snowman costume', 'Cabel TV'],
+    host: {
+      avatarUrl: 'img/avatar-max.jpg',
+      id: 3,
+      isPro: false,
+      name: 'Max',
+    },
+  },
 ];
 
 
