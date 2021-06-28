@@ -18,3 +18,11 @@ export const PlacesListType = {
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export const INITIAL_CITY = CITIES[0];
+
+export const SortType = {
+  POPULAR: 'Popular',
+  PRICE_LOW: 'Price: low to high',
+  PRICE_HIGH: 'Price: high to low',
+  RATING_HIGH: 'Top rated first',
+};
+

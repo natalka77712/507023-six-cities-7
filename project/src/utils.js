@@ -1,4 +1,5 @@
 import {offers} from './mocks/offers';
+import {SortType} from './const';
 
 const MAX_STARS_AMOUNT = 5;
 
@@ -18,7 +19,6 @@ function getShuffledArray(array) {
     result.push(source[index]);
     source.splice(index, 1);
   }
-
   return result;
 }
 
@@ -26,4 +26,17 @@ export const nearPlaces = getShuffledArray(offers).slice(1);
 
 export function filterOffers (city, places) {
   return places.filter((offer) => offer.city.name === city);
+}
+
+export function setSorting (offer, sortType) {
+  switch (sortType) {
+    case SortType.PRICE_LOW:
+      return offer.sort((a,b) => (a.price - b.price));
+    case SortType.PRICE_HIGH:
+      return offer.sort((a, b) => (b.price - a.price));
+    case SortType.RATING_HIGH:
+      return offer.sort((a,b) => (b.rating - a.rating));
+    default:
+      return offer;
+  }
 }
