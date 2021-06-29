@@ -9,7 +9,7 @@ import CityList from '../../city-list/city-list';
 import {ActionCreator} from '../../../store/action';
 import {connect} from 'react-redux';
 import PlacesSorting from '../../places-sorting/places-sorting';
-import {setSorting} from '../../../utils';
+import {filterOffers, setSorting} from '../../../utils';
 
 function Main ({ offers, city, onCitySelect}) {
   const [activeCard, setActiveCard] = useState(null);
@@ -36,11 +36,11 @@ function Main ({ offers, city, onCitySelect}) {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} aces to stay in {city}</b>
                 <PlacesSorting/>
-                <NearPlacesList offers={offers} setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
+                <NearPlacesList setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} activeCard={activeCard}/>
+                  <Map activeCard={activeCard}/>
                 </section>
               </div>
             </div>

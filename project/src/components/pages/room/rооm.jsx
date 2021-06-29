@@ -12,12 +12,12 @@ import Image from '../../elements/image/image';
 import PropertyItem from '../../elements/property-item/property-item';
 import {countRating} from '../../../utils';
 import {PlacesListType} from '../../../const';
+import {connect} from 'react-redux';
 
-function Room(props) {
+function Room({reviews, offers, nearPlaces}) {
   const {id} = useParams();
-  const {reviews, offers, nearPlaces} = props;
   const [activeCard, setActiveCard] = useState(null);
-  const offer = offers.find((place) => place.id === Number(id));
+  const offer = offers.find((place) => place.id === +id);
 
   const {
     description,
@@ -126,8 +126,6 @@ function Room(props) {
   );
 }
 
-export default Room;
-
 Room.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
@@ -139,3 +137,12 @@ Room.propTypes = {
     cardProp,
   ).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+
+export {Room};
+
+export default connect(mapStateToProps, null)(Room);

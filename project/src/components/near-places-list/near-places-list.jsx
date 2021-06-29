@@ -3,6 +3,8 @@ import Card from '../card/card';
 import PropTypes from 'prop-types';
 import cardProp from '../card/card.prop';
 import {PlacesListType} from '../../const';
+import {connect} from 'react-redux';
+
 
 function NearPlacesList ({offers, setActiveCard, type}) {
   const isRoomPage = type === PlacesListType.ROOM_PAGE;
@@ -24,4 +26,11 @@ NearPlacesList.propTypes = {
   type: PropTypes.string,
 };
 
-export default NearPlacesList;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+
+export {NearPlacesList};
+
+export default connect(mapStateToProps, null)(NearPlacesList);

@@ -7,7 +7,7 @@ import {countRating} from '../../utils';
 
 function Card ({offer, setActiveCard, isRoomPage})  {
   const {title, imgPreview, price, rating, type, isPremium, id} = offer;
-  const image = imgPreview[0];
+  // const image = imgPreview[0];
 
   return (
     <article
@@ -25,8 +25,8 @@ function Card ({offer, setActiveCard, isRoomPage})  {
         </div>}
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${id}`}>{title}
-          <img className="place-card__image" src={image} width="260" height="200" alt="Place"/>
+        <Link to={`/offer/${id}`}>
+          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place"/>
         </Link>
       </div>
       <div className="place-card__info">

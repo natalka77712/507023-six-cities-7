@@ -4,6 +4,7 @@ import cardProp from '../../card/card.prop';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
 import FavoriteCard from './favorite-card/favorite-card';
+import {connect} from 'react-redux';
 
 function Favorites ({offers}) {
 
@@ -47,10 +48,18 @@ function Favorites ({offers}) {
   );
 }
 
-export default Favorites;
-
 Favorites.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  offers:state.offers,
+});
+
+
+export {Favorites};
+
+export default connect(mapStateToProps, null)(Favorites);
+
