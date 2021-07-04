@@ -52,3 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
 export {PlacesSorting};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlacesSorting);
+

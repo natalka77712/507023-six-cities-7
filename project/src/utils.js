@@ -1,8 +1,7 @@
-import {offers} from './mocks/offers';
+// import {offers} from './mocks/offers';
 import {AuthorizationStatus, SortType} from './const';
 
 const MAX_STARS_AMOUNT = 5;
-
 
 export const formatDate = (date) => {
   const reviewDate = new Date(date);
@@ -23,10 +22,8 @@ export const  getShuffledArray = (array) => {
   return result;
 };
 
-export const nearPlaces = getShuffledArray(offers).slice(1);
-
-export const filterOffers = (city, places) => (
-  places.filter((offer) => offer.city.name === city)
+export const filterOffers = (city, offers) => (
+  offers.filter((offer) => offer.city.name === city)
 );
 
 export const setSorting = (offer, sortType) => {
@@ -71,3 +68,4 @@ export const adaptToClient = (offer) => {
 
   return adaptedOffer;
 };
+

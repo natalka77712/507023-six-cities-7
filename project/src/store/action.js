@@ -25,15 +25,8 @@ export const ActionCreator = {
     type: ActionType.FETCH_OFFERS,
     payload: offers,
   }),
-  fetchNearOffers: (offers) => ({
-    type: ActionType.FETCH_NEAR_OFFERS,
-    payload: offers,
-  }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
   }),
 };

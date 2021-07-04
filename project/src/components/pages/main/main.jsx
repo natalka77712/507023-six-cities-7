@@ -1,22 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../header/header';
-import cardProp from '../../card/card.prop';
 import Map from '../../map/map';
 import {PlacesListType} from '../../../const';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import CityList from '../../city-list/city-list';
-import {ActionCreator} from '../../../store/action';
 import {connect} from 'react-redux';
 import PlacesSorting from '../../places-sorting/places-sorting';
 import {filterOffers, setSorting} from '../../../utils';
+import {fetchOffers} from '../../../store/api-actions';
+import LoadingScreen from '../../loading-screen/loading-screen';
 
-function Main ({ offers, city, onCitySelect}) {
+function Main ({ offers, city, isOffersLoaded, onLoadData}) {
   const [activeCard, setActiveCard] = useState(null);
 
-  useEffect(() =>{
-    onCitySelect(city);
-  }, [onCitySelect, city]);
+  useEffect(() => {
+    if (!isOffersLoaded) {
+      onLoadData();
+    }
+  }, [isOffersLoaded, onLoadData]);
+
+  if (!isOffersLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  const cityCoords = offers[0].city.location;
 
   return (
     <div>
@@ -27,7 +37,7 @@ function Main ({ offers, city, onCitySelect}) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <CityList activeCity={city} getActiveCity={onCitySelect}/>
+              <CityList/>
             </section>
           </div>
           <div className="cities">
@@ -36,11 +46,11 @@ function Main ({ offers, city, onCitySelect}) {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} aces to stay in {city}</b>
                 <PlacesSorting/>
-                <NearPlacesList setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
+                <NearPlacesList offers ={offers} setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map activeCard={activeCard}/>
+                  <Map activeCard={activeCard} initialPosition={cityCoords}/>
                 </section>
               </div>
             </div>
@@ -52,22 +62,21 @@ function Main ({ offers, city, onCitySelect}) {
 }
 
 Main.propTypes = {
-  offers: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
+  offers: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
-  onCitySelect: PropTypes.func.isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: setSorting(state.offers, state.activeSort),
+  offers: setSorting(filterOffers(state.city, state.offers), state.activeSort),
   city: state.city,
+  isOffersLoaded: state.isOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCitySelect(city) {
-    dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.filteredOffers());
+  onLoadData() {
+    dispatch(fetchOffers());
   },
 });
 

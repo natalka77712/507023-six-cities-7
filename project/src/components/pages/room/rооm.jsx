@@ -10,14 +10,16 @@ import Map from '../../map/map';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import Image from '../../elements/image/image';
 import PropertyItem from '../../elements/property-item/property-item';
-import {countRating} from '../../../utils';
+import {countRating, getShuffledArray} from '../../../utils';
 import {PlacesListType} from '../../../const';
 import {connect} from 'react-redux';
 
-function Room({reviews, offers, nearPlaces}) {
+function Room({reviews, offers}) {
   const {id} = useParams();
   const [activeCard, setActiveCard] = useState(null);
   const offer = offers.find((place) => place.id === +id);
+
+  const nearPlaces = getShuffledArray(offers).slice(1);
 
   const {
     description,
@@ -132,9 +134,6 @@ Room.propTypes = {
   ).isRequired,
   reviews: PropTypes.arrayOf(
     reviewItemProp,
-  ).isRequired,
-  nearPlaces: PropTypes.arrayOf(
-    cardProp,
   ).isRequired,
 };
 

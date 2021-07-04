@@ -7,7 +7,6 @@ import {countRating} from '../../utils';
 
 function Card ({offer, setActiveCard, isRoomPage})  {
   const {title, imgPreview, price, rating, type, isPremium, id} = offer;
-  // const image = imgPreview[0];
 
   return (
     <article

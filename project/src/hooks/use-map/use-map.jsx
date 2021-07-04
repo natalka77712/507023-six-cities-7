@@ -1,18 +1,17 @@
 import {useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 
-function useMap(mapRef, location) {
+function useMap(mapRef, initialPosition) {
   const [map, setMap] = useState(null);
-  const {latitude, longitude, zoom} = location;
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: latitude,
-          lng: longitude,
+          lat: initialPosition.latitude,
+          lng: initialPosition.longitude,
         },
-        zoom,
+        zoom: initialPosition.zoom,
       });
 
       leaflet
@@ -25,9 +24,13 @@ function useMap(mapRef, location) {
         .addTo(instance);
 
       setMap(instance);
+    } else if (mapRef.current !== null && map !== null) {
+      map.flyTo({
+        lat: initialPosition.latitude,
+        lng: initialPosition.longitude,
+      }, initialPosition.zoom);
     }
-
-  }, [mapRef, map, latitude, longitude, zoom]);
+  }, [mapRef, map, initialPosition]);
 
   return map;
 }
