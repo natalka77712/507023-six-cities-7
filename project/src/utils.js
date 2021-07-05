@@ -11,16 +11,16 @@ export const formatDate = (date) => {
 
 export const countRating = (rate) => `${rate / MAX_STARS_AMOUNT * 100}%`;
 
-export const  getShuffledArray = (array) => {
-  const result = [], source = array.concat([]);
-
-  while (source.length) {
-    const index = Math.floor(Math.random() * source.length);
-    result.push(source[index]);
-    source.splice(index, 1);
-  }
-  return result;
-};
+// export const  getShuffledArray = (array) => {
+//   const result = [], source = array.concat([]);
+//
+//   while (source.length) {
+//     const index = Math.floor(Math.random() * source.length);
+//     result.push(source[index]);
+//     source.splice(index, 1);
+//   }
+//   return result;
+// };
 
 export const filterOffers = (city, offers) => (
   offers.filter((offer) => offer.city.name === city)

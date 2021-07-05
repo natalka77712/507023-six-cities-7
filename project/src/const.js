@@ -13,7 +13,7 @@ export const PinSettings = {
 
 export const PlacesListType = {
   MAIN_PAGE: 'main',
-  ROOM_PAGE: 'room',
+  ROOM_PAGE: 'room-page',
 };
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

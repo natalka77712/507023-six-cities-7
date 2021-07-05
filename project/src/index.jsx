@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-// import {reviews} from './mocks/reviews';
+import {reviews} from './mocks/reviews';
 import {applyMiddleware, createStore} from 'redux';
 import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
@@ -22,10 +22,11 @@ const store = createStore(
   ),
 );
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App reviews={reviews}/>
     </Provider>
 
   </React.StrictMode>,

@@ -5,35 +5,37 @@ import ReviewsList from '../../reviews-list/reviews-list';
 import PropTypes from 'prop-types';
 import reviewItemProp from '../../review-item/review-item.prop';
 import cardProp from '../../card/card.prop';
-import {useParams} from 'react-router-dom';
-import Map from '../../map/map';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import Image from '../../elements/image/image';
 import PropertyItem from '../../elements/property-item/property-item';
-import {countRating, getShuffledArray} from '../../../utils';
+import {countRating} from '../../../utils';
 import {PlacesListType} from '../../../const';
 import {connect} from 'react-redux';
+import {Map} from '../../map/map';
+import {useParams} from 'react-router-dom';
 
-function Room({reviews, offers}) {
+function RoomPage({reviews, offers}) {
+  const MAX_NEIGHBOURHOOD_OFFERS = 3;
   const {id} = useParams();
   const [activeCard, setActiveCard] = useState(null);
   const offer = offers.find((place) => place.id === +id);
 
-  const nearPlaces = getShuffledArray(offers).slice(1);
+  const nearPlaces = offers.slice(0, MAX_NEIGHBOURHOOD_OFFERS);
 
   const {
     description,
     goods,
     host,
     bedrooms,
-    imgPreview,
+    images,
     isPremium,
     maxAdults,
     price,
     rating,
     title,
     type,
-  } = offer;
+    location,
+  } = offer ;
 
   return (
     <div className="page">
@@ -43,7 +45,7 @@ function Room({reviews, offers}) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {imgPreview.map((image) => <Image key={image} image={image}/>)}
+              {images.map((image) => <Image key={image} image={image}/>)}
             </div>
           </div>
           <div className="property__container container">
@@ -114,7 +116,7 @@ function Room({reviews, offers}) {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearPlaces} activeCard={activeCard}/>
+            <Map offers={nearPlaces} activeCard={activeCard} initialPosition={location}/>
           </section>
         </section>
         <div className="container">
@@ -128,7 +130,7 @@ function Room({reviews, offers}) {
   );
 }
 
-Room.propTypes = {
+RoomPage.propTypes = {
   offers: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
@@ -141,7 +143,6 @@ const mapStateToProps = (state) => ({
   offers: state.offers,
 });
 
+export {RoomPage};
 
-export {Room};
-
-export default connect(mapStateToProps, null)(Room);
+export default connect(mapStateToProps, null)(RoomPage);
