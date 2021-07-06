@@ -2,18 +2,13 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import cardProp from '../card/card.prop';
-
 import 'leaflet/dist/leaflet.css';
 import {PinSettings} from '../../const';
 import useMap from '../../hooks/use-map/use-map';
+import {connect} from 'react-redux';
 
-const CITY = {
-  latitude: 52.38333,
-  longitude: 4.9,
-  zoom: 12,
-};
 
-function Map ({offers, activeCard, initialPosition = CITY}) {
+function Map ({offers, activeCard, initialPosition}) {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, initialPosition);
@@ -66,4 +61,10 @@ Map.propTypes = {
   initialPosition: PropTypes.objectOf(PropTypes.number.isRequired),
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export {Map};
+
+export default connect(mapStateToProps, null)(Map);

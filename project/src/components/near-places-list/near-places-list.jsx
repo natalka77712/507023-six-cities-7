@@ -1,8 +1,8 @@
 import React from 'react';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
-import cardProp from '../card/card.prop';
 import {PlacesListType} from '../../const';
+
 
 function NearPlacesList ({offers, setActiveCard, type}) {
   const isRoomPage = type === PlacesListType.ROOM_PAGE;
@@ -17,11 +17,10 @@ function NearPlacesList ({offers, setActiveCard, type}) {
 }
 
 NearPlacesList.propTypes = {
-  offers: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
+  offers: PropTypes.array.isRequired,
   setActiveCard: PropTypes.func.isRequired,
   type: PropTypes.string,
 };
+
 
 export default NearPlacesList;

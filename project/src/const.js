@@ -13,7 +13,7 @@ export const PinSettings = {
 
 export const PlacesListType = {
   MAIN_PAGE: 'main',
-  ROOM_PAGE: 'room',
+  ROOM_PAGE: 'room-page',
 };
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -24,5 +24,21 @@ export const SortType = {
   PRICE_LOW: 'Price: low to high',
   PRICE_HIGH: 'Price: high to low',
   RATING_HIGH: 'Top rated first',
+};
+
+// export const ACTIVE_SORT = SortType.POPULAR;
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
 };
 

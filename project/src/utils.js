@@ -1,5 +1,5 @@
-import {offers} from './mocks/offers';
-import {SortType} from './const';
+// import {offers} from './mocks/offers';
+import {AuthorizationStatus, SortType} from './const';
 
 const MAX_STARS_AMOUNT = 5;
 
@@ -11,24 +11,22 @@ export const formatDate = (date) => {
 
 export const countRating = (rate) => `${rate / MAX_STARS_AMOUNT * 100}%`;
 
-function getShuffledArray(array) {
-  const result = [], source = array.concat([]);
+// export const  getShuffledArray = (array) => {
+//   const result = [], source = array.concat([]);
+//
+//   while (source.length) {
+//     const index = Math.floor(Math.random() * source.length);
+//     result.push(source[index]);
+//     source.splice(index, 1);
+//   }
+//   return result;
+// };
 
-  while (source.length) {
-    const index = Math.floor(Math.random() * source.length);
-    result.push(source[index]);
-    source.splice(index, 1);
-  }
-  return result;
-}
+export const filterOffers = (city, offers) => (
+  offers.filter((offer) => offer.city.name === city)
+);
 
-export const nearPlaces = getShuffledArray(offers).slice(1);
-
-export function filterOffers (city, places) {
-  return places.filter((offer) => offer.city.name === city);
-}
-
-export function setSorting (offer, sortType) {
+export const setSorting = (offer, sortType) => {
   switch (sortType) {
     case SortType.PRICE_LOW:
       return offer.sort((a,b) => (a.price - b.price));
@@ -39,4 +37,35 @@ export function setSorting (offer, sortType) {
     default:
       return offer;
   }
-}
+};
+
+export const isCheckedAuth = (authorizationStatus) =>
+  authorizationStatus === AuthorizationStatus.UNKNOWN;
+
+export const adaptToClient = (offer) => {
+
+  const adaptedOffer = {
+    ...offer,
+    imgPreview: offer.preview_image,
+    isFavorite: offer.is_favorite,
+    isPremium: offer.is_premium,
+    maxAdults: offer.max_adults,
+    bedrooms: offer.bedrooms,
+    host: {
+      ...offer.host,
+      avatarUrl: offer.host.avatar_url,
+      isPro: offer.host.is_pro,
+    },
+  };
+
+  delete adaptedOffer.preview_image;
+  delete adaptedOffer.is_favorite;
+  delete adaptedOffer.is_premium;
+  delete adaptedOffer.max_adults;
+  delete adaptedOffer.bedrooms;
+  delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.is_pro;
+
+  return adaptedOffer;
+};
+

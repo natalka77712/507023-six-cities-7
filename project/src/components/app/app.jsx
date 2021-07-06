@@ -1,26 +1,40 @@
-import React from 'react';
-import Main from '../pages/main/main';
+import React, {useEffect} from 'react';
+import Main from '../pages/main-page/main-page';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import SignIn from '../pages/sign-in/sign-in';
 import Favorites from '../pages/favorites/favorites';
-import Room from '../pages/room/rооm';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import {Path} from '../../const';
-import cardProp from '../card/card.prop';
-import reviewItemProp from '../review-item/review-item.prop';
+import LoadingScreen from '../loading-screen/loading-screen';
 import PropTypes from 'prop-types';
+import {fetchOffers} from '../../store/api-actions';
+import {connect} from 'react-redux';
+import RoomPage from '../pages/room-page/room-page';
+import reviewItemProp from '../review-item/review-item.prop';
 
-function App(props) {
-  const {offers, reviews, nearPlaces} = props;
+function App({isOffersLoaded, onLoadData, reviews}) {
+
+  useEffect(() => {
+    if (!isOffersLoaded) {
+      onLoadData();
+    }
+  }, [isOffersLoaded, onLoadData]);
+
+  if (!isOffersLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Path.MAIN} render={()=><Main />}/>
-        <Route exact path={Path.LOGIN} render={()=><SignIn/>}/>
-        <Route exact path={Path.FAVORITES} render={()=><Favorites offers={offers}/>}/>
-        <Route exact path={Path.OFFER} render={()=><Room reviews={reviews} offers={offers} nearPlaces={nearPlaces}/>}/>
-        <Route exact path={Path.ERROR} render={()=><PageNotFound/>}/>
+        <Route exact path={Path.MAIN} component={Main}/>
+        <Route exact path={Path.LOGIN} component={SignIn}/>
+        <Route exact path={Path.FAVORITES} component={Favorites}/>
+        <Route exact path={Path.OFFER} render={()=><RoomPage reviews={reviews}/>}/>
+        <Route exact path={Path.ERROR} component={PageNotFound}/>
         <Redirect from={'*'} to={Path.ERROR}/>
       </Switch>
     </BrowserRouter>
@@ -28,15 +42,23 @@ function App(props) {
 }
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
     reviewItemProp,
   ).isRequired,
-  nearPlaces: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isOffersLoaded: state.isOffersLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchOffers());
+  },
+});
+
+export {App};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

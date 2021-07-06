@@ -27,7 +27,7 @@ function PlacesSorting ({changeSort, activeSort}) {
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''} `}>
         {Object.values(SortType).map((sort) => (
-          <li key={sort} onClick={handleSortChange} className={`places__option ${sort === activeSort ? 'places__option--active' : ''}`} tabIndex="0">{sort}</li>
+          <li key={sort} onClick={handleSortChange} className={`places__option ${sort === activeSort  ? 'places__option--active' : ''}`} tabIndex="0">{sort}</li>
         ))}
       </ul>
     </form>
@@ -52,3 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
 export {PlacesSorting};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlacesSorting);
+

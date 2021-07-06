@@ -1,4 +1,4 @@
-import PropTypes, {array, bool, number, string} from 'prop-types';
+import PropTypes, { bool, number, string} from 'prop-types';
 
 
 export default PropTypes.shape({
@@ -16,7 +16,7 @@ export default PropTypes.shape({
     zoom: PropTypes.number.isRequired,
   }),
   type: string.isRequired,
-  imgPreview: array.isRequired,
+  imgPreview: string.isRequired,
   price: number.isRequired,
   isPremium: bool.isRequired,
   rating: number.isRequired,
