@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cardProp from '../../card/card.prop';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
 import FavoriteCard from './favorite-card/favorite-card';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import cardProp from '../../card/card.prop';
 
 function Favorites ({offers}) {
 
