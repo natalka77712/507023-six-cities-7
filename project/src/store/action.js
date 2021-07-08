@@ -6,6 +6,7 @@ export const ActionType = {
   FETCH_NEAR_OFFERS: 'cities/fetchNearOffers',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  LOGIN: 'user/login',
 };
 
 export const ActionCreator = {
@@ -25,8 +26,15 @@ export const ActionCreator = {
     type: ActionType.FETCH_OFFERS,
     payload: offers,
   }),
-  requireAuthorization: (status) => ({
+  requireAuthorization: (payload) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
+    payload,
+  }),
+  login: (email) => ({
+    type: ActionType.LOGIN,
+    payload: email,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
   }),
 };

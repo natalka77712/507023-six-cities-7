@@ -26,8 +26,6 @@ export const SortType = {
   RATING_HIGH: 'Top rated first',
 };
 
-// export const ACTIVE_SORT = SortType.POPULAR;
-
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',
@@ -41,4 +39,3 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
 };
-

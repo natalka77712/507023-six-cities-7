@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import FormReview from '../../form-review/form-review';
-import Header from '../../header/header';
+
 import ReviewsList from '../../reviews-list/reviews-list';
 import PropTypes from 'prop-types';
 import reviewItemProp from '../../review-item/review-item.prop';
@@ -9,12 +9,14 @@ import NearPlacesList from '../../near-places-list/near-places-list';
 import Image from '../../elements/image/image';
 import PropertyItem from '../../elements/property-item/property-item';
 import {countRating} from '../../../utils';
-import {PlacesListType} from '../../../const';
+import {AuthorizationStatus, Path, PlacesListType} from '../../../const';
 import {connect} from 'react-redux';
 import {Map} from '../../map/map';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import Login from '../../login/login';
+import LogOut from '../../log-out/log-out';
 
-function RoomPage({reviews, offers}) {
+function RoomPage({reviews, offers, authorizationStatus}) {
   const MAX_NEIGHBOURHOOD_OFFERS = 3;
   const {id} = useParams();
   const [activeCard, setActiveCard] = useState(null);
@@ -39,7 +41,18 @@ function RoomPage({reviews, offers}) {
 
   return (
     <div className="page">
-      <Header/>
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <div className="header__left">
+              <Link className="header__logo-link" to={Path.MAIN}>
+                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
+              </Link>
+            </div>
+            {authorizationStatus === AuthorizationStatus.AUTH ? <Login/> : <LogOut/>}
+          </div>
+        </div>
+      </header>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -137,10 +150,12 @@ RoomPage.propTypes = {
   reviews: PropTypes.arrayOf(
     reviewItemProp,
   ).isRequired,
+  authorizationStatus: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export {RoomPage};

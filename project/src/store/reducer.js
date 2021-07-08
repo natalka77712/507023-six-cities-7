@@ -1,13 +1,13 @@
 import {AuthorizationStatus, INITIAL_CITY, SortType} from '../const';
 import {ActionType} from './action';
-// import {offers} from '../mocks/offers';
 
 const initialState = {
   city: INITIAL_CITY,
   offers: [],
   isOffersLoaded: false,
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
   activeSort: SortType.POPULAR,
+  userEmail: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,7 +36,19 @@ const reducer = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload,
+        authorizationStatus: action.payload.status,
+      };
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.AUTH,
+        userEmail: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        userEmail: null,
       };
     default:
       return state;
@@ -44,3 +56,4 @@ const reducer = (state = initialState, action) => {
 };
 
 export {reducer};
+
