@@ -1,38 +1,41 @@
 import React, {useEffect} from 'react';
 import Main from '../pages/main-page/main-page';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import SignIn from '../pages/sign-in/sign-in';
+import {Router as BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import LoginPage from '../pages/login-page/login-page';
 import Favorites from '../pages/favorites/favorites';
 import PageNotFound from '../pages/page-not-found/page-not-found';
-import {Path} from '../../const';
+import {AuthorizationStatus, Path} from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PropTypes from 'prop-types';
-import {fetchOffers} from '../../store/api-actions';
+import {checkAuth, fetchOffers} from '../../store/api-actions';
 import {connect} from 'react-redux';
 import RoomPage from '../pages/room-page/room-page';
 import reviewItemProp from '../review-item/review-item.prop';
+import browserHistory from '../../browser-history';
+import {PrivateRoute} from '../../private-route/private-route';
 
-function App({isOffersLoaded, onLoadData, reviews}) {
+const isCheckingAuth = (authorizationStatus) =>
+  authorizationStatus === AuthorizationStatus.UNKNOWN;
+
+function App({requireAuthorization, isOffersLoaded, onLoadData, reviews, authorizationStatus}) {
 
   useEffect(() => {
-    if (!isOffersLoaded) {
-      onLoadData();
-    }
-  }, [isOffersLoaded, onLoadData]);
+    onLoadData();
+    requireAuthorization();
+  }, [onLoadData, requireAuthorization]);
 
-  if (!isOffersLoaded) {
+  if (isCheckingAuth(authorizationStatus) || !isOffersLoaded) {
     return (
       <LoadingScreen />
     );
   }
 
-
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={Path.MAIN} component={Main}/>
-        <Route exact path={Path.LOGIN} component={SignIn}/>
-        <Route exact path={Path.FAVORITES} component={Favorites}/>
+        <Route exact path={Path.LOGIN} component={LoginPage}/>
+        <PrivateRoute exact path={Path.FAVORITES} render={() => (<Favorites/>)}/>
         <Route exact path={Path.OFFER} render={()=><RoomPage reviews={reviews}/>}/>
         <Route exact path={Path.ERROR} component={PageNotFound}/>
         <Redirect from={'*'} to={Path.ERROR}/>
@@ -42,6 +45,8 @@ function App({isOffersLoaded, onLoadData, reviews}) {
 }
 
 App.propTypes = {
+  requireAuthorization: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string,
   isOffersLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
@@ -51,11 +56,15 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   isOffersLoaded: state.isOffersLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchOffers());
+  },
+  requireAuthorization() {
+    dispatch(checkAuth());
   },
 });
 

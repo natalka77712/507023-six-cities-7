@@ -1,5 +1,5 @@
 // import {offers} from './mocks/offers';
-import {AuthorizationStatus, SortType} from './const';
+import {SortType} from './const';
 
 const MAX_STARS_AMOUNT = 5;
 
@@ -10,17 +10,6 @@ export const formatDate = (date) => {
 };
 
 export const countRating = (rate) => `${rate / MAX_STARS_AMOUNT * 100}%`;
-
-// export const  getShuffledArray = (array) => {
-//   const result = [], source = array.concat([]);
-//
-//   while (source.length) {
-//     const index = Math.floor(Math.random() * source.length);
-//     result.push(source[index]);
-//     source.splice(index, 1);
-//   }
-//   return result;
-// };
 
 export const filterOffers = (city, offers) => (
   offers.filter((offer) => offer.city.name === city)
@@ -39,10 +28,7 @@ export const setSorting = (offer, sortType) => {
   }
 };
 
-export const isCheckedAuth = (authorizationStatus) =>
-  authorizationStatus === AuthorizationStatus.UNKNOWN;
-
-export const adaptToClient = (offer) => {
+export const adaptOffersToClient = (offer) => {
 
   const adaptedOffer = {
     ...offer,
@@ -69,3 +55,15 @@ export const adaptToClient = (offer) => {
   return adaptedOffer;
 };
 
+export const adaptUserToClient = (userInfo) => {
+  const adaptedUserInfo = {
+    ...userInfo,
+    avatarUrl: userInfo.avatar_url,
+    isPro: userInfo.is_pro,
+  };
+
+  delete adaptedUserInfo.avatar_url;
+  delete adaptedUserInfo.is_pro;
+
+  return adaptedUserInfo;
+};
