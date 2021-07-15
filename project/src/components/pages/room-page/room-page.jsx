@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import FormReview from '../../form-review/form-review';
-
 import ReviewsList from '../../reviews-list/reviews-list';
 import PropTypes from 'prop-types';
 import reviewItemProp from '../../review-item/review-item.prop';
@@ -11,18 +10,29 @@ import PropertyItem from '../../elements/property-item/property-item';
 import {countRating} from '../../../utils';
 import {AuthorizationStatus, Path, PlacesListType} from '../../../const';
 import {connect} from 'react-redux';
-import {Map} from '../../map/map';
+import Map from '../../map/map';
 import {Link, useParams} from 'react-router-dom';
 import Login from '../../login/login';
 import LogOut from '../../log-out/log-out';
+import {fetchOffersNearby, fetchReviews, fetchRoomData} from '../../../store/api-actions';
+import LoadingScreen from '../../loading-screen/loading-screen';
 
-function RoomPage({reviews, offers, authorizationStatus}) {
-  const MAX_NEIGHBOURHOOD_OFFERS = 3;
+function RoomPage({reviews, room, offersNearby, authorizationStatus, isRoomDataLoaded, getPageData}) {
+  const MAX_NEARBY_OFFERS = 3;
+  const MAX_IMAGES_COUNT = 6;
   const {id} = useParams();
-  const [activeCard, setActiveCard] = useState(null);
-  const offer = offers.find((place) => place.id === +id);
 
-  const nearPlaces = offers.slice(0, MAX_NEIGHBOURHOOD_OFFERS);
+  const nearOffers = offersNearby.filter((item) => item !== room).slice(0, MAX_NEARBY_OFFERS);
+
+  useEffect(() => {
+    getPageData(id);
+  },  [id, isRoomDataLoaded, getPageData]);
+
+  if (!isRoomDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   const {
     description,
@@ -36,8 +46,12 @@ function RoomPage({reviews, offers, authorizationStatus}) {
     rating,
     title,
     type,
-    location,
-  } = offer ;
+    city,
+  } = room ;
+
+  const {avatarUrl, isPro, name} = host;
+
+  const imagesToRender = images.slice(0, MAX_IMAGES_COUNT);
 
   return (
     <div className="page">
@@ -58,7 +72,7 @@ function RoomPage({reviews, offers, authorizationStatus}) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => <Image key={image} image={image}/>)}
+              {imagesToRender.map((image) => <Image key={image} image={image}/>)}
             </div>
           </div>
           <div className="property__container container">
@@ -107,14 +121,14 @@ function RoomPage({reviews, offers, authorizationStatus}) {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    {host.name}
+                    {name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  {isPro && (
+                    <span className="property__user-status">Pro</span>
+                  )}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -124,18 +138,18 @@ function RoomPage({reviews, offers, authorizationStatus}) {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList reviews={reviews}/>
-                <FormReview/>
+                {authorizationStatus === AuthorizationStatus.AUTH && (<FormReview roomId={id}/>)}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearPlaces} activeCard={activeCard} initialPosition={location}/>
+            <Map offers={[room, ...offersNearby]} activeCard={room} initialPosition={city}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlacesList offers={nearPlaces} setActiveCard={setActiveCard} type={PlacesListType.ROOM_PAGE} />
+            <NearPlacesList offers={nearOffers} onMouseEnter={() => {}} onMouseLeave={() => {}} type={PlacesListType.ROOM_PAGE} />
           </section>
         </div>
       </main>
@@ -144,20 +158,38 @@ function RoomPage({reviews, offers, authorizationStatus}) {
 }
 
 RoomPage.propTypes = {
-  offers: PropTypes.arrayOf(
+  room: PropTypes.objectOf(
+    cardProp,
+  ).isRequired,
+  offersNearby: PropTypes.arrayOf(
     cardProp,
   ).isRequired,
   reviews: PropTypes.arrayOf(
     reviewItemProp,
   ).isRequired,
   authorizationStatus: PropTypes.string,
+  getPageData: PropTypes.func.isRequired,
+  isRoomDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  room: state.room,
   offers: state.offers,
+  reviews: state.reviews,
+  offersNearby: state.offersNearby,
   authorizationStatus: state.authorizationStatus,
+  isRoomDataLoaded: state.isRoomDataLoaded,
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  getPageData(id) {
+    dispatch(fetchRoomData(id));
+    dispatch(fetchOffersNearby(id));
+    dispatch(fetchReviews(id));
+  },
+});
+
 
 export {RoomPage};
 
-export default connect(mapStateToProps, null)(RoomPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);

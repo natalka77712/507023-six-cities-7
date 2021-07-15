@@ -17,14 +17,14 @@ import {PrivateRoute} from '../../private-route/private-route';
 const isCheckingAuth = (authorizationStatus) =>
   authorizationStatus === AuthorizationStatus.UNKNOWN;
 
-function App({requireAuthorization, isOffersLoaded, onLoadData, reviews, authorizationStatus}) {
+function App({requireAuthorization, isDataLoaded, onLoadData, reviews, authorizationStatus}) {
 
   useEffect(() => {
     onLoadData();
     requireAuthorization();
   }, [onLoadData, requireAuthorization]);
 
-  if (isCheckingAuth(authorizationStatus) || !isOffersLoaded) {
+  if (isCheckingAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -47,7 +47,7 @@ function App({requireAuthorization, isOffersLoaded, onLoadData, reviews, authori
 App.propTypes = {
   requireAuthorization: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string,
-  isOffersLoaded: PropTypes.bool.isRequired,
+  isDataLoaded: PropTypes.bool,
   onLoadData: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
     reviewItemProp,
@@ -55,8 +55,9 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isOffersLoaded: state.isOffersLoaded,
+  isDataLoaded: state.isOffersLoaded,
   authorizationStatus: state.authorizationStatus,
+  reviews: state.reviews,
 });
 
 const mapDispatchToProps = (dispatch) => ({

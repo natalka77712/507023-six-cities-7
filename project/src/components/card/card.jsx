@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import {countRating} from '../../utils';
 
 
-function Card ({offer, setActiveCard, isRoomPage})  {
+function Card ({offer, isRoomPage, onMouseEnter, onMouseLeave})  {
   const {title, imgPreview, price, rating, type, isPremium, id} = offer;
-
 
   return (
     <article
@@ -15,8 +14,9 @@ function Card ({offer, setActiveCard, isRoomPage})  {
         `place-card
         ${isRoomPage ? 'near-places__card' : 'cities__place-card'}`
       }
-      onMouseEnter={() => setActiveCard(id)}
-      onMouseLeave={() => setActiveCard('')}
+
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark">
@@ -57,7 +57,8 @@ function Card ({offer, setActiveCard, isRoomPage})  {
 
 Card.propTypes = {
   offer: cardProp,
-  setActiveCard: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   isRoomPage: PropTypes.bool.isRequired,
 };
 

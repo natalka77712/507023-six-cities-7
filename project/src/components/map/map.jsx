@@ -1,70 +1,62 @@
 import React, {useEffect, useRef} from 'react';
-import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import cardProp from '../card/card.prop';
+import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {PinSettings} from '../../const';
 import useMap from '../../hooks/use-map/use-map';
-import {connect} from 'react-redux';
 
+const defaultCustomPin = leaflet.icon({
+  iconUrl: PinSettings.DEFAULT_IMG,
+});
 
-function Map ({offers, activeCard, initialPosition}) {
+const activeCustomPin = leaflet.icon({
+  iconUrl: PinSettings.ACTIVE_IMG,
+});
 
+function Map({initialPosition, offers, activeCard}) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, initialPosition);
 
-  const defaultCustomPin = leaflet.icon({
-    iconUrl: PinSettings.DEFAULT_IMG,
-  });
-
-  const activeCustomPin = leaflet.icon({
-    iconUrl: PinSettings.ACTIVE_IMG,
-  });
-
   useEffect(() => {
-    const markers = [];
-    if (map) {
-      offers.forEach((offer) => {
-        const marker = leaflet
-          .marker(
-            {
-              lat: offer.location.latitude,
-              lng: offer.location.longitude,
-            },
-            {
-              icon: (offer.id === activeCard) ? activeCustomPin : defaultCustomPin,
-            });
-        markers.push(marker);
-        marker.addTo(map);
-      });
-    }
-    return () => {
-      markers.forEach((marker) => {
-        marker.remove();
-      });
-    };
-  }, [map, offers, activeCard, activeCustomPin, defaultCustomPin]);
+    const layerGroup = leaflet.layerGroup();
 
-  return (
-    <div id='map' style={{height: '100%'}} ref={mapRef}/>
-  );
+    if (map) {
+      offers.forEach(({location: {latitude, longitude}, id}) => {
+        const marker = leaflet.marker(
+          {
+            lat: latitude,
+            lng: longitude,
+          },
+          {
+            icon: (id === activeCard.id) ? activeCustomPin : defaultCustomPin,
+          },
+        );
+        layerGroup.addLayer(marker);
+      });
+      layerGroup.addTo(map);
+    }
+
+    return () => {
+      if (map) {
+        layerGroup.remove();
+      }
+    };
+  }, [map, offers, activeCard]);
+
+  return <div id='map' style={{height: '100%'}} ref={mapRef}/>;
 }
 
 Map.propTypes = {
-  offers: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
-  activeCard: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  initialPosition: PropTypes.objectOf(PropTypes.number.isRequired),
+  activeCard: PropTypes.object.isRequired,
+  initialPosition: PropTypes.shape({
+    location: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-});
-
-export {Map};
-
-export default connect(mapStateToProps, null)(Map);
+export default Map;

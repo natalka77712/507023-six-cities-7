@@ -3,10 +3,13 @@ export const ActionType = {
   FILTERED_OFFERS: 'cities/FILTERED_OFFERS',
   SET_SORT: 'cities/SET_SORT',
   FETCH_OFFERS: 'cities/fetchOffers',
-  FETCH_NEAR_OFFERS: 'cities/fetchNearOffers',
+  FETCH_ROOM: 'cities/fetchRoom',
+  FETCH_OFFERS_NEARBY: 'cities/fetchOffersNearby',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   LOGIN: 'user/login',
+  FETCH_REVIEWS: 'user/fetchReviews',
+  REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -26,15 +29,31 @@ export const ActionCreator = {
     type: ActionType.FETCH_OFFERS,
     payload: offers,
   }),
+  fetchRoom: (room) => ({
+    type: ActionType.FETCH_ROOM,
+    payload: room,
+  }),
+  fetchOffersNearby: (offersNearby) => ({
+    type: ActionType.FETCH_OFFERS_NEARBY,
+    payload: offersNearby,
+  }),
   requireAuthorization: (payload) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload,
   }),
-  login: (email) => ({
+  login: (userData) => ({
     type: ActionType.LOGIN,
-    payload: email,
+    payload: userData,
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  }),
+  fetchReviews: (reviews) => ({
+    type: ActionType.FETCH_REVIEWS,
+    payload: reviews,
   }),
 };
