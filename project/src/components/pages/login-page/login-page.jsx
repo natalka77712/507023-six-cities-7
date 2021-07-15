@@ -6,7 +6,7 @@ import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
 import LogOut from '../../log-out/log-out';
 
-function LoginPage ({onSubmit}) {
+function LoginPage ({onSubmit, city}) {
   const loginRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
@@ -52,9 +52,9 @@ function LoginPage ({onSubmit}) {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/some/valid/uri">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={Path.MAIN}>
+                <span>{city}</span>
+              </Link>
             </div>
           </section>
         </div>
@@ -65,7 +65,13 @@ function LoginPage ({onSubmit}) {
 
 LoginPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  city: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  city: state.city,
+});
+
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
@@ -74,4 +80,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {LoginPage};
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

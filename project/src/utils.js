@@ -54,17 +54,18 @@ export const adaptOffersToClient = (offer) => {
   return adaptedOffer;
 };
 
-export const adaptUserToClient = (userInfo) => {
-  const adaptedUserInfo = {
-    ...userInfo,
-    avatarUrl: userInfo.avatar_url,
-    isPro: userInfo.is_pro,
+export const adaptUserToClient = (userData) => {
+  const adaptedUser = {
+    ...userData,
+    avatarUrl: userData.avatar_url,
+    isPro: userData.is_pro,
   };
 
-  delete adaptedUserInfo.avatar_url;
-  delete adaptedUserInfo.is_pro;
+  delete adaptedUser.token;
+  delete adaptedUser.avatar_url;
+  delete adaptedUser.is_pro;
 
-  return adaptedUserInfo;
+  return adaptedUser;
 };
 
 export const adaptReviewToClient = (review) => {

@@ -11,7 +11,7 @@ const initialState = {
   isRoomDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   activeSort: SortType.POPULAR,
-  userEmail: '',
+  userData: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -57,13 +57,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.AUTH,
-        userEmail: action.payload,
+        userData: action.payload,
       };
     case ActionType.LOGOUT:
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
-        userEmail: null,
       };
     case ActionType.FETCH_REVIEWS:
       return {

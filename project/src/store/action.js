@@ -41,9 +41,9 @@ export const ActionCreator = {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload,
   }),
-  login: (email) => ({
+  login: (userData) => ({
     type: ActionType.LOGIN,
-    payload: email,
+    payload: userData,
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
