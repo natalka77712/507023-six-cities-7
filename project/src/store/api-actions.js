@@ -1,6 +1,6 @@
 import {ActionCreator} from './action';
-import {APIRoute, AuthorizationStatus} from '../const';
-import {adaptOffersToClient} from '../utils';
+import {APIRoute, AuthorizationStatus, Path} from '../const';
+import {adaptOffersToClient, adaptReviewToClient} from '../utils';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -23,4 +23,32 @@ export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()))
+);
+
+export const fetchRoomData = (id) => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.OFFERS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.fetchRoom(adaptOffersToClient(data))))
+    .catch(() => {
+      dispatch(ActionCreator.redirectToRoute(Path.ERROR));
+    });
+};
+
+export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${id}${APIRoute.NEARBY}`)
+    .then(({data}) => dispatch(ActionCreator.fetchOffersNearby(data.map(adaptOffersToClient))))
+);
+export const fetchReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.REVIEWS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.fetchReviews(data.map(adaptReviewToClient))))
+);
+
+export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.REVIEWS}/${id}`,
+    {comment, rating},
+    {
+      headers: {
+        'x-token': localStorage.getItem('token'),
+      },
+    })
+    .then(({data}) => dispatch(ActionCreator.fetchReviews(data.map(adaptReviewToClient))))
 );

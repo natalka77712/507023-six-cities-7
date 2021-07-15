@@ -4,7 +4,11 @@ import {ActionType} from './action';
 const initialState = {
   city: INITIAL_CITY,
   offers: [],
-  isOffersLoaded: false,
+  offersNearby: [],
+  reviews: [],
+  room: {},
+  isDataLoaded: false,
+  isRoomDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   activeSort: SortType.POPULAR,
   userEmail: '',
@@ -33,10 +37,21 @@ const reducer = (state = initialState, action) => {
         offers: action.payload,
         isOffersLoaded: true,
       };
+    case ActionType.FETCH_ROOM:
+      return {
+        ...state,
+        room: action.payload,
+        isRoomDataLoaded: true,
+      };
+    case ActionType.FETCH_OFFERS_NEARBY:
+      return {
+        ...state,
+        offersNearby: action.payload,
+      };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload.status,
+        authorizationStatus: action.payload,
       };
     case ActionType.LOGIN:
       return {
@@ -49,6 +64,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
         userEmail: null,
+      };
+    case ActionType.FETCH_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+        isDataLoaded: true,
       };
     default:
       return state;

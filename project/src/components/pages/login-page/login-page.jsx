@@ -6,7 +6,6 @@ import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
 import LogOut from '../../log-out/log-out';
 
-
 function LoginPage ({onSubmit}) {
   const loginRef = useRef();
   const passwordRef = useRef();

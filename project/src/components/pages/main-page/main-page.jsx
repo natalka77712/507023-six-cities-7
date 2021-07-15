@@ -8,15 +8,17 @@ import {connect} from 'react-redux';
 import PlacesSorting from '../../places-sorting/places-sorting';
 import {filterOffers, setSorting} from '../../../utils';
 import Login from '../../login/login';
-
 import {Link} from 'react-router-dom';
 import LogOut from '../../log-out/log-out';
 
 
 function MainPage ({offers, city, authorizationStatus}) {
-  const [activeCard, setActiveCard] = useState(null);
+  const [activeCard, setActiveCard] = useState({});
 
-  const cityCoords = offers[0].city.location;
+  const onCardHover = (id) => {
+    const currentCard = offers.find((offer) => offer.id === Number(id));
+    setActiveCard(currentCard);
+  };
 
   return (
     <div>
@@ -46,11 +48,11 @@ function MainPage ({offers, city, authorizationStatus}) {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} aces to stay in {city}</b>
                 <PlacesSorting/>
-                <NearPlacesList offers ={offers} setActiveCard={setActiveCard} type={PlacesListType.MAIN_PAGE}/>
+                <NearPlacesList offers={offers} onMouseEnter={onCardHover} onMouseLeave={() => setActiveCard({})} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map activeCard={activeCard} initialPosition={cityCoords}/>
+                  <Map offers={offers} activeCard={activeCard} initialPosition={offers[0].city} />
                 </section>
               </div>
             </div>
@@ -72,7 +74,6 @@ const mapStateToProps = (state) => ({
   city: state.city,
   authorizationStatus: state.authorizationStatus,
 });
-
 
 export {MainPage};
 

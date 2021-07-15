@@ -1,4 +1,3 @@
-// import {offers} from './mocks/offers';
 import {SortType} from './const';
 
 const MAX_STARS_AMOUNT = 5;
@@ -67,3 +66,20 @@ export const adaptUserToClient = (userInfo) => {
 
   return adaptedUserInfo;
 };
+
+export const adaptReviewToClient = (review) => {
+  const adaptedReview = {
+    ...review,
+    user: {
+      ...review.user,
+      avatarUrl: review.user.avatar_url,
+      isPro: review.user.is_pro,
+    },
+  };
+
+  delete adaptedReview.user.avatar_url;
+  delete adaptedReview.user.is_pro;
+
+  return adaptedReview;
+};
+

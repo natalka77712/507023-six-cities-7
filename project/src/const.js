@@ -35,7 +35,31 @@ export const AuthorizationStatus = {
 export const APIRoute = {
   OFFERS: '/hotels',
   FAVORITE: '/favorite',
-  COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  NEARBY: '/nearby',
+  REVIEWS: '/comments',
+};
+
+export const Ratings = {
+  PERFECT: {
+    value: 5,
+    title: 'perfect',
+  },
+  GOOD: {
+    value: 4,
+    title: 'good',
+  },
+  NOT_BAD: {
+    value: 3,
+    title: 'not bad',
+  },
+  BADLY: {
+    value: 2,
+    title: 'badly',
+  },
+  TERRIBLY: {
+    value: 1,
+    title: 'terribly',
+  },
 };
