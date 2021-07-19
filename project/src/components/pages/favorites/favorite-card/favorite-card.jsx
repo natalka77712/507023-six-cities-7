@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import cardProp from '../../../card/card.prop';
 import {countRating} from '../../../../utils';
@@ -57,4 +57,4 @@ FavoriteCard.propTypes = {
   offer: cardProp,
 };
 
-export default FavoriteCard;
+export default memo(FavoriteCard);

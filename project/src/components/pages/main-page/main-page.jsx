@@ -1,24 +1,30 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import Map from '../../map/map';
 import {AuthorizationStatus, Path, PlacesListType} from '../../../const';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import CityList from '../../city-list/city-list';
-import {connect} from 'react-redux';
 import PlacesSorting from '../../places-sorting/places-sorting';
 import {filterOffers, setSorting} from '../../../utils';
 import Login from '../../login/login';
 import {Link} from 'react-router-dom';
 import LogOut from '../../log-out/log-out';
+import {useSelector} from 'react-redux';
 
-
-function MainPage ({offers, city, authorizationStatus}) {
+function MainPage () {
   const [activeCard, setActiveCard] = useState({});
+
+  const {activeSort, city} = useSelector((state) => state.OPERATION);
+  const {offers} = useSelector((state) => state.DATA);
+  const {authorizationStatus} = useSelector((state) => state.AUTHORIZATION);
+
+  const cityOffers = setSorting(filterOffers(city, offers), activeSort);
 
   const onCardHover = (id) => {
     const currentCard = offers.find((offer) => offer.id === Number(id));
     setActiveCard(currentCard);
   };
+
+  const cityCoords = cityOffers[0].city;
 
   return (
     <div>
@@ -48,11 +54,11 @@ function MainPage ({offers, city, authorizationStatus}) {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} aces to stay in {city}</b>
                 <PlacesSorting/>
-                <NearPlacesList offers={offers} onMouseEnter={onCardHover} onMouseLeave={() => setActiveCard({})} type={PlacesListType.MAIN_PAGE}/>
+                <NearPlacesList offers={cityOffers} onMouseEnter={onCardHover} onMouseLeave={() => setActiveCard({})} type={PlacesListType.MAIN_PAGE}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} activeCard={activeCard} initialPosition={offers[0].city} />
+                  <Map offers={cityOffers} activeCard={activeCard} initialPosition={cityCoords} />
                 </section>
               </div>
             </div>
@@ -63,18 +69,4 @@ function MainPage ({offers, city, authorizationStatus}) {
   );
 }
 
-MainPage.propTypes = {
-  offers: PropTypes.array.isRequired,
-  city: PropTypes.string.isRequired,
-  authorizationStatus: PropTypes.string,
-};
-
-const mapStateToProps = (state) => ({
-  offers: setSorting(filterOffers(state.city, state.offers), state.activeSort),
-  city: state.city,
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {MainPage};
-
-export default connect(mapStateToProps, null)(MainPage);
+export default MainPage;

@@ -2,10 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Path} from '../../const';
 import {logout} from '../../store/api-actions';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 
-function Login({email, avatarUrl, signOut}) {
+function Login() {
+  const dispatch = useDispatch();
+  const {userData} = useSelector((state) => state.AUTHORIZATION);
+
+  const {email, avatarUrl} = userData;
 
   return (
     <nav className="header__nav">
@@ -26,7 +29,7 @@ function Login({email, avatarUrl, signOut}) {
             href="/some/valid/uri"
             onClick={(evt) => {
               evt.preventDefault();
-              signOut();
+              dispatch(logout());
             }}
           >
             <span className="header__signout">Sign out</span>
@@ -37,23 +40,5 @@ function Login({email, avatarUrl, signOut}) {
   );
 }
 
-Login.propTypes = {
-  signOut: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = ({userData: {email, avatarUrl}}) => ({
-  email,
-  avatarUrl,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  signOut() {
-    dispatch(logout());
-  },
-});
-
-export {Login};
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
 

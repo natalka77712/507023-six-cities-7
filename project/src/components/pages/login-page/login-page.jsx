@@ -1,22 +1,23 @@
 import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
 import LogOut from '../../log-out/log-out';
 
-function LoginPage ({onSubmit, city}) {
+function LoginPage () {
   const loginRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const {city} = useSelector((state) => state.OPERATION);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
     history.push(Path.MAIN);
   };
 
@@ -63,21 +64,4 @@ function LoginPage ({onSubmit, city}) {
   );
 }
 
-LoginPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  city: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-export {LoginPage};
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

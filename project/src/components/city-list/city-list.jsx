@@ -1,13 +1,16 @@
 import {CITIES} from '../../const';
 import React from 'react';
-import PropTypes  from 'prop-types';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeCity} from '../../store/action';
 
-function CityList ({city, onUserClick}) {
+
+function CityList () {
+
+  const {city} = useSelector((state) => state.OPERATION);
+  const dispatch = useDispatch();
 
   const handleCityClick = (place) => {
-    onUserClick(place);
+    dispatch(changeCity(place));
   };
 
   return (
@@ -27,23 +30,4 @@ function CityList ({city, onUserClick}) {
   );
 }
 
-CityList.propTypes = {
-  onUserClick: PropTypes.func.isRequired,
-  city: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onUserClick(city) {
-    dispatch(ActionCreator.changeCity(city));
-  },
-  getOffers() {
-    dispatch(ActionCreator.filteredOffers());
-  },
-});
-
-export {CityList};
-export default connect(mapStateToProps, mapDispatchToProps)(CityList);
+export default React.memo(CityList);

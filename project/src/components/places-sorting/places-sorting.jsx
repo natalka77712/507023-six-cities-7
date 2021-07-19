@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 import {SortType} from '../../const';
+import {changeCity} from '../../store/action';
 
-function PlacesSorting ({changeSort, activeSort}) {
+function PlacesSorting () {
+  const dispatch = useDispatch();
+  const {activeSort} = useSelector((state) => state.OPERATION);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenToggle  = (currOpenState) => {
@@ -12,7 +14,7 @@ function PlacesSorting ({changeSort, activeSort}) {
   };
 
   const handleSortChange = (evt) => {
-    changeSort(evt.target.innerText);
+    dispatch(changeCity(evt.target.innerText));
     setIsOpen(false);
   };
 
@@ -34,22 +36,5 @@ function PlacesSorting ({changeSort, activeSort}) {
   );
 }
 
-PlacesSorting.propTypes = {
-  changeSort: PropTypes.func.isRequired,
-  activeSort: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  activeSort: state.activeSort,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeSort(sort) {
-    dispatch(ActionCreator.setSort(sort));
-  },
-});
-
-export {PlacesSorting};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesSorting);
+export default React.memo(PlacesSorting);
 

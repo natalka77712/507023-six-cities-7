@@ -1,15 +1,16 @@
 import React from 'react';
 import Footer from '../../footer/footer';
 import FavoriteCard from './favorite-card/favorite-card';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import cardProp from '../../card/card.prop';
+import {useSelector} from 'react-redux';
 import {AuthorizationStatus, Path} from '../../../const';
 import {Link} from 'react-router-dom';
-import {Login} from '../../login/login';
+import Login from '../../login/login';
 import LogOut from '../../log-out/log-out';
 
-function Favorites ({offers, authorizationStatus}) {
+function Favorites () {
+
+  const {authorizationStatus} = useSelector((state) => state.AUTHORIZATION);
+  const {offers} = useSelector((state) => state.DATA);
 
   const favouriteList = [];
 
@@ -62,20 +63,5 @@ function Favorites ({offers, authorizationStatus}) {
   );
 }
 
-Favorites.propTypes = {
-  offers: PropTypes.arrayOf(
-    cardProp,
-  ).isRequired,
-  authorizationStatus: PropTypes.string,
-};
-
-const mapStateToProps = (state) => ({
-  offers:state.offers,
-  authorizationStatus: state.authorizationStatus,
-});
-
-
-export {Favorites};
-
-export default connect(mapStateToProps, null)(Favorites);
+export default Favorites;
 
