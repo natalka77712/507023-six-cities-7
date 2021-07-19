@@ -22,3 +22,4 @@ ReviewsList.propTypes = {
 };
 
 export default ReviewsList;
+

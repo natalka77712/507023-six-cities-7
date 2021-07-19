@@ -3,7 +3,6 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeCity} from '../../store/action';
 
-
 function CityList () {
 
   const {city} = useSelector((state) => state.OPERATION);

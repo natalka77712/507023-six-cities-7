@@ -7,6 +7,7 @@ import {
   requireAuthorization,
   loadReviews, loadOffersNearby, setUserData, setLogOut
 } from './action';
+import {sortDateComments} from '../utils';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -61,5 +62,8 @@ export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) 
         'x-token': localStorage.getItem('token'),
       },
     })
-    .then(({data}) => dispatch(loadReviews(data.map(adaptReviewToClient))))
+    .then(({data}) => {
+      const sortedComments = data.sort(sortDateComments);
+      dispatch(loadReviews(sortedComments.map((commentItem) => adaptReviewToClient(commentItem))));
+    })
 );

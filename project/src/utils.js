@@ -26,3 +26,7 @@ export const setSorting = (offers, sortType) => {
       return offers;
   }
 };
+
+export const sortDateComments = (a, b) => (
+  Date.parse(b.date) - Date.parse(a.date)
+);

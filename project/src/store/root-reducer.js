@@ -3,7 +3,6 @@ import {authorization} from './authorization/authorization';
 import {data} from './data/data';
 import {operation} from './operation/operation';
 
-
 export const NameSpace = {
   DATA: 'DATA',
   AUTHORIZATION: 'AUTHORIZATION',

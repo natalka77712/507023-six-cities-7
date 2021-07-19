@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
 import Map from '../../map/map';
-import {AuthorizationStatus, Path, PlacesListType} from '../../../const';
+import {PlacesListType} from '../../../const';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import CityList from '../../city-list/city-list';
 import PlacesSorting from '../../places-sorting/places-sorting';
 import {filterOffers, setSorting} from '../../../utils';
-import Login from '../../login/login';
-import {Link} from 'react-router-dom';
-import LogOut from '../../log-out/log-out';
 import {useSelector} from 'react-redux';
+import Header from '../../header/header';
 
 function MainPage () {
   const [activeCard, setActiveCard] = useState({});
 
   const {activeSort, city} = useSelector((state) => state.OPERATION);
   const {offers} = useSelector((state) => state.DATA);
-  const {authorizationStatus} = useSelector((state) => state.AUTHORIZATION);
 
   const cityOffers = setSorting(filterOffers(city, offers), activeSort);
 
@@ -29,18 +26,7 @@ function MainPage () {
   return (
     <div>
       <div className="page page--gray page--main">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <Link className="header__logo-link" to={Path.MAIN}>
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
-                </Link>
-              </div>
-              {authorizationStatus === AuthorizationStatus.AUTH ? <Login/> : <LogOut/>}
-            </div>
-          </div>
-        </header>
+        <Header/>
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
