@@ -2,12 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus, Path} from '../../const';
 import Login from '../login/login';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import LogOut from '../log-out/log-out';
 
+function Header() {
 
-function Header({authorizationStatus}) {
+  const {authorizationStatus} = useSelector((state) => state.AUTHORIZATION);
+
   return (
     <header className="header">
       <div className="container">
@@ -17,20 +18,11 @@ function Header({authorizationStatus}) {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
             </Link>
           </div>
-          {authorizationStatus === AuthorizationStatus.AUTH ? <LogOut/> : <Login/>}
+          {authorizationStatus === AuthorizationStatus.AUTH ? <Login/> : <LogOut/>}
         </div>
       </div>
     </header>
   );
 }
 
-Header.propTypes = {
-  authorizationStatus: PropTypes.string,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {Header};
-export default connect(mapStateToProps, null)(Header);
+export default Header;

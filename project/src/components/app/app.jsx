@@ -6,23 +6,25 @@ import Favorites from '../pages/favorites/favorites';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import {AuthorizationStatus, Path} from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
-import PropTypes from 'prop-types';
 import {checkAuth, fetchOffers} from '../../store/api-actions';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import RoomPage from '../pages/room-page/room-page';
-import reviewItemProp from '../review-item/review-item.prop';
 import browserHistory from '../../browser-history';
-import {PrivateRoute} from '../../private-route/private-route';
+import PrivateRoute from '../../private-route/private-route';
 
 const isCheckingAuth = (authorizationStatus) =>
   authorizationStatus === AuthorizationStatus.UNKNOWN;
 
-function App({requireAuthorization, isDataLoaded, onLoadData, reviews, authorizationStatus}) {
+function App() {
+  const {authorizationStatus} = useSelector((state) => state.AUTHORIZATION);
+  const {isDataLoaded} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onLoadData();
-    requireAuthorization();
-  }, [onLoadData, requireAuthorization]);
+    dispatch(fetchOffers());
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   if (isCheckingAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -36,7 +38,7 @@ function App({requireAuthorization, isDataLoaded, onLoadData, reviews, authoriza
         <Route exact path={Path.MAIN} component={Main}/>
         <Route exact path={Path.LOGIN} component={LoginPage}/>
         <PrivateRoute exact path={Path.FAVORITES} render={() => (<Favorites/>)}/>
-        <Route exact path={Path.OFFER} render={()=><RoomPage reviews={reviews}/>}/>
+        <Route exact path={Path.OFFER} render={()=><RoomPage/>}/>
         <Route exact path={Path.ERROR} component={PageNotFound}/>
         <Redirect from={'*'} to={Path.ERROR}/>
       </Switch>
@@ -44,31 +46,4 @@ function App({requireAuthorization, isDataLoaded, onLoadData, reviews, authoriza
   );
 }
 
-App.propTypes = {
-  requireAuthorization: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string,
-  isDataLoaded: PropTypes.bool,
-  onLoadData: PropTypes.func.isRequired,
-  reviews: PropTypes.arrayOf(
-    reviewItemProp,
-  ).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isDataLoaded: state.isOffersLoaded,
-  authorizationStatus: state.authorizationStatus,
-  reviews: state.reviews,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchOffers());
-  },
-  requireAuthorization() {
-    dispatch(checkAuth());
-  },
-});
-
-export {App};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -1,59 +1,58 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_CITY: 'cities/CHANGE_CITY',
   FILTERED_OFFERS: 'cities/FILTERED_OFFERS',
   SET_SORT: 'cities/SET_SORT',
-  FETCH_OFFERS: 'cities/fetchOffers',
-  FETCH_ROOM: 'cities/fetchRoom',
-  FETCH_OFFERS_NEARBY: 'cities/fetchOffersNearby',
+  LOAD_OFFERS: 'cities/loadOffers',
+  LOAD_ROOM: 'cities/loadRoom',
+  LOAD_OFFERS_NEARBY: 'cities/loadOffersNearby',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
-  LOGOUT: 'user/logout',
-  LOGIN: 'user/login',
-  FETCH_REVIEWS: 'user/fetchReviews',
+  SET_LOG_OUT: 'user/setLogOut',
+  SET_USER_DATA: 'user/setUserData',
+  LOAD_REVIEWS: 'user/loadReviews',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  filteredOffers: (city) => ({
-    type: ActionType.FILTERED_OFFERS,
-    payload: city,
-  }),
-  setSort: (sort) => ({
-    type: ActionType.SET_SORT,
-    payload: sort,
-  }),
-  fetchOffers: (offers) => ({
-    type: ActionType.FETCH_OFFERS,
-    payload: offers,
-  }),
-  fetchRoom: (room) => ({
-    type: ActionType.FETCH_ROOM,
-    payload: room,
-  }),
-  fetchOffersNearby: (offersNearby) => ({
-    type: ActionType.FETCH_OFFERS_NEARBY,
-    payload: offersNearby,
-  }),
-  requireAuthorization: (payload) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload,
-  }),
-  login: (userData) => ({
-    type: ActionType.LOGIN,
-    payload: userData,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  fetchReviews: (reviews) => ({
-    type: ActionType.FETCH_REVIEWS,
-    payload: reviews,
-  }),
-};
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (payload) => ({
+  payload,
+}));
+
+export const setUserData = createAction(ActionType.SET_USER_DATA, (userData) => ({
+  payload: userData,
+}));
+
+export const setLogOut = createAction(ActionType.SET_LOG_OUT);
+
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
+  payload: reviews,
+}));
+
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
+  payload: offers,
+}));
+
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offersNearby) => ({
+  payload: offersNearby,
+}));
+
+export const loadRoom = createAction(ActionType.LOAD_ROOM, (room) => ({
+  payload: room,
+}));
+
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
+  payload: city,
+}));
+
+export const filteredOffers = createAction(ActionType.FILTERED_OFFERS, (city) => ({
+  payload: city,
+}));
+
+export const setSort = createAction(ActionType.SET_SORT, (sort) => ({
+  payload: sort,
+}));
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
+

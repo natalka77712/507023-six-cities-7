@@ -1,39 +1,29 @@
 import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
-import LogOut from '../../log-out/log-out';
+import Header from '../../header/header';
 
-function LoginPage ({onSubmit, city}) {
+function LoginPage () {
   const loginRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const {city} = useSelector((state) => state.OPERATION);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
     history.push(Path.MAIN);
   };
 
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={Path.MAIN}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
-              </Link>
-            </div>
-            <LogOut/>
-          </div>
-        </div>
-      </header>
+      <Header/>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -63,21 +53,4 @@ function LoginPage ({onSubmit, city}) {
   );
 }
 
-LoginPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  city: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-export {LoginPage};
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

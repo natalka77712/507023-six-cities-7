@@ -3,7 +3,6 @@ import Card from '../card/card';
 import PropTypes from 'prop-types';
 import {PlacesListType} from '../../const';
 
-
 function NearPlacesList ({offers, onMouseEnter, onMouseLeave, type}) {
   const isRoomPage = type === PlacesListType.ROOM_PAGE;
   return (
@@ -22,6 +21,5 @@ NearPlacesList.propTypes = {
   onMouseLeave: PropTypes.func,
   type: PropTypes.string,
 };
-
 
 export default NearPlacesList;

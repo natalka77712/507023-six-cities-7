@@ -2,8 +2,7 @@ import React from 'react';
 import reviewItemProp from './review-item.prop';
 import {countRating, formatDate} from '../../utils';
 
-function ReviewItem (props) {
-  const {review} = props;
+function ReviewItem ({review}) {
 
   const {comment, date, id, user, rating} = review;
 
