@@ -14,7 +14,7 @@ function Login() {
     <nav className="header__nav">
       <ul className="header__nav-list">
         <li className="header__nav-item user">
-          <Link to={Path.LOGIN} className="header__nav-link header__nav-link--profile" href="#">
+          <Link to={Path.FAVORITES} className="header__nav-link header__nav-link--profile" href="#">
             <div className="header__avatar-wrapper user__avatar-wrapper">
               <img src={avatarUrl} alt='user' style={{borderRadius: '50%'}}/>
             </div>
@@ -24,16 +24,16 @@ function Login() {
           </Link>
         </li>
         <li className="header__nav-item">
-          <a
+          <Link
             className="header__nav-link"
-            href="/some/valid/uri"
+            to={Path.MAIN}
             onClick={(evt) => {
               evt.preventDefault();
               dispatch(logout());
             }}
           >
             <span className="header__signout">Sign out</span>
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

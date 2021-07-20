@@ -51,7 +51,10 @@ export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
 
 export const fetchReviews = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.REVIEWS}/${id}`)
-    .then(({data}) => dispatch(loadReviews(data.map(adaptReviewToClient))))
+    .then(({data}) => {
+      const sortedComments = data.sort(sortDateComments);
+      dispatch(loadReviews(sortedComments.map((adaptReviewToClient))));
+    })
 );
 
 export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) => (
