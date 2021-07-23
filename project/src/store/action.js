@@ -54,10 +54,6 @@ export const setSort = createAction(ActionType.SET_SORT, (sort) => ({
   payload: sort,
 }));
 
-export const incrementActiveOffer = createAction(ActionType.INCREMENT_ACTIVE_OFFER, (id) => ({
-  payload: id,
-}));
-
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
 }));

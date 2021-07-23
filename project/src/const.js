@@ -1,3 +1,5 @@
+export const MAX_STARS_AMOUNT = 5;
+
 export const Path = {
   MAIN: '/',
   LOGIN: '/login',

@@ -53,7 +53,7 @@ function Card ({offer, pageType, onMouseEnter, onMouseLeave})  {
 }
 
 Card.propTypes = {
-  offer: cardProp,
+  offer: PropTypes.shape(cardProp).isRequired,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
   pageType: PropTypes.oneOfType([

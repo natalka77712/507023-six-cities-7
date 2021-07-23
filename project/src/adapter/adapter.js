@@ -6,7 +6,6 @@ export const adaptOffersToClient = (offer) => {
     isFavorite: offer.is_favorite,
     isPremium: offer.is_premium,
     maxAdults: offer.max_adults,
-    bedrooms: offer.bedrooms,
     host: {
       ...offer.host,
       avatarUrl: offer.host.avatar_url,
@@ -18,7 +17,6 @@ export const adaptOffersToClient = (offer) => {
   delete adaptedOffer.is_favorite;
   delete adaptedOffer.is_premium;
   delete adaptedOffer.max_adults;
-  delete adaptedOffer.bedrooms;
   delete adaptedOffer.host.avatar_url;
   delete adaptedOffer.host.is_pro;
 

@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {fetchFavoritesOffers} from '../../../store/api-actions';
 import Favorites from '../../favorites/favorites';
 import Header from '../../header/header';
 import LoadingScreen from '../../loading-screen/loading-screen';
 import FavoritesEmpty from '../../favorites-empty/favorites-empty';
+import Footer from '../../footer/footer';
 
 function FavoritesPage() {
   const dispatch = useDispatch();
@@ -34,17 +34,7 @@ function FavoritesPage() {
         />) : (
         <FavoritesEmpty />
       )}
-      <footer className="footer container">
-        <Link to="/">
-          <img
-            className="footer__logo"
-            src="img/logo.svg"
-            alt="6 cities logo"
-            width="64"
-            height="33"
-          />
-        </Link>
-      </footer>
+      <Footer/>
     </div>
   );
 }

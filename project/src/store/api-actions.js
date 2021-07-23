@@ -59,13 +59,7 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
 );
 
 export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.REVIEWS}/${id}`,
-    {comment, rating},
-    {
-      headers: {
-        'x-token': localStorage.getItem('token'),
-      },
-    })
+  api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating})
     .then(({data}) => {
       const sortedComments = data.sort(sortDateComments);
       dispatch(loadReviews(sortedComments.map((commentItem) => adaptReviewToClient(commentItem))));

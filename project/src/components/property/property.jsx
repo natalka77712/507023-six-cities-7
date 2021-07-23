@@ -38,7 +38,6 @@ function Property() {
 
   const imagesToRender = images.slice(0, MAX_IMAGES_COUNT);
 
-
   return (
     <>
       <section className="property">
