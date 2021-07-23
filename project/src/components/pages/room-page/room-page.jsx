@@ -9,7 +9,7 @@ import Header from '../../header/header';
 function RoomPage() {
   const {id} = useParams();
   const dispatch = useDispatch();
-  const {reviews, offersNearby, room, isRoomDataLoaded} = useSelector((state) => state.DATA);
+  const {isRoomDataLoaded} = useSelector((state) => state.DATA);
 
   useEffect(() => {
     dispatch(fetchRoomData(id));
@@ -28,11 +28,7 @@ function RoomPage() {
       <Header/>
 
       <main className="page__main page__main--property">
-        <Property
-          room={room}
-          reviews={reviews}
-          nearOffers={offersNearby}
-        />
+        <Property/>
       </main>
     </div>
   );

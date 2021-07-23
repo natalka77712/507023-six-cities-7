@@ -4,6 +4,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {PinSettings} from '../../const';
 import useMap from '../../hooks/use-map/use-map';
+import cardProp from '../card/card.prop';
 
 const defaultCustomPin = leaflet.icon({
   iconUrl: PinSettings.DEFAULT_IMG,
@@ -56,7 +57,9 @@ Map.propTypes = {
     }).isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(
+    cardProp,
+  ).isRequired,
 };
 
 export default Map;

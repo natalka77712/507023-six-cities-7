@@ -37,4 +37,3 @@ function useMap(mapRef, initialPosition) {
 }
 
 export default useMap;
-

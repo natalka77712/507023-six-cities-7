@@ -3,42 +3,39 @@ import cardProp from './card.prop.js';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {countRating} from '../../utils';
+import {PageType, Types} from '../../const';
+import FavoritesButton from '../favorites-button/favorites-button';
 
+function Card ({offer, pageType, onMouseEnter, onMouseLeave})  {
+  const {title, imgPreview, price, isFavorite, rating, type, isPremium, id} = offer;
 
-function Card ({offer, isRoomPage, onMouseEnter, onMouseLeave})  {
-  const {title, imgPreview, price, rating, type, isPremium, id} = offer;
-
+  const favoriteCard = PageType.FAVORITE;
   return (
     <article
-      className={
-        `place-card
-        ${isRoomPage ? 'near-places__card' : 'cities__place-card'}`
-      }
-
+      className={`${pageType === favoriteCard ? PageType.FAVORITE.article : 'cities__place-card'} place-card`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       {isPremium &&
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="place-card__mark">
+        <span>Premium</span>
+      </div>}
+      <div className={`${pageType === favoriteCard ? PageType.FAVORITE.img : 'cities__image-wrapper'} place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={imgPreview} width="260" height="200" alt="Place"/>
+          <img className="place-card__image" src={imgPreview} width={`${pageType === favoriteCard ? PageType.FAVORITE.width : '260'}`} height={`${pageType === favoriteCard ? PageType.FAVORITE.height : '200'}`} alt="Place"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${pageType === favoriteCard ? PageType.FAVORITE.cardInfo : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoritesButton
+            id={id}
+            buttonType={Types.CARD}
+            isFavorite={isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -59,7 +56,10 @@ Card.propTypes = {
   offer: cardProp,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  isRoomPage: PropTypes.bool.isRequired,
+  pageType: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 export default Card;
