@@ -16,7 +16,7 @@ function MainEmpty ({city}) {
       </div>
     </div>
   );
-};
+}
 
 MainEmpty.propTypes = {
   city: PropTypes.string.isRequired,

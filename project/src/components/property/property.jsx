@@ -3,11 +3,12 @@ import Image from '../elements/image/image';
 import {countRating} from '../../utils';
 import PropertyItem from '../elements/property-item/property-item';
 import ReviewsList from '../reviews-list/reviews-list';
-import {AuthorizationStatus, PlacesListType} from '../../const';
+import {AuthorizationStatus, PageType, Types} from '../../const';
 import FormReview from '../form-review/form-review';
 import Map from '../map/map';
 import NearPlacesList from '../near-places-list/near-places-list';
 import {useSelector} from 'react-redux';
+import FavoritesButton from '../favorites-button/favorites-button';
 
 function Property() {
   const MAX_NEARBY_OFFERS = 3;
@@ -25,6 +26,7 @@ function Property() {
     images,
     isPremium,
     maxAdults,
+    isFavorite,
     price,
     rating,
     title,
@@ -35,6 +37,7 @@ function Property() {
   const {avatarUrl, isPro, name} = host;
 
   const imagesToRender = images.slice(0, MAX_IMAGES_COUNT);
+
 
   return (
     <>
@@ -51,12 +54,11 @@ function Property() {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
-                <svg className="property__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"/>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <FavoritesButton
+                id={id}
+                buttonType={Types.ROOM_PAGE}
+                isFavorite={isFavorite}
+              />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
@@ -118,7 +120,7 @@ function Property() {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <NearPlacesList offers={nearOffers} onMouseEnter={() => {}} onMouseLeave={() => {}} type={PlacesListType.ROOM_PAGE} />
+          <NearPlacesList offers={nearOffers} onMouseEnter={() => {}} onMouseLeave={() => {}} pageType={PageType.ROOM} />
         </section>
       </div>
     </>

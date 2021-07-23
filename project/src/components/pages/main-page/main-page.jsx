@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Map from '../../map/map';
-import {PlacesListType} from '../../../const';
 import NearPlacesList from '../../near-places-list/near-places-list';
 import CityList from '../../city-list/city-list';
 import PlacesSorting from '../../places-sorting/places-sorting';
@@ -8,13 +7,13 @@ import {filterOffers, setSorting} from '../../../utils';
 import {useSelector} from 'react-redux';
 import Header from '../../header/header';
 import MainEmpty from '../../main-empty/main-empty';
+import {PageType} from '../../../const';
 
 function MainPage () {
   const [activeCard, setActiveCard] = useState({});
 
   const {activeSort, city} = useSelector((state) => state.OPERATION);
   const {offers} = useSelector((state) => state.DATA);
-
   const cityOffers = setSorting(filterOffers(city, offers), activeSort);
 
   const onCardHover = (id) => {
@@ -43,8 +42,7 @@ function MainPage () {
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{offersAmount} aces to stay in {city}</b>
                   <PlacesSorting/>
-                  <NearPlacesList offers={cityOffers} onMouseEnter={onCardHover} onMouseLeave={() => setActiveCard({})}
-                                  type={PlacesListType.MAIN_PAGE}/>
+                  <NearPlacesList offers={cityOffers} onMouseEnter={onCardHover} onMouseLeave={() => setActiveCard({})} pageType={PageType.MAIN}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
@@ -53,8 +51,7 @@ function MainPage () {
                 </div>
               </div>
             </div>
-            : <MainEmpty city={city}/>
-          }
+            : <MainEmpty city={city}/>}
         </main>
       </div>
     </div>

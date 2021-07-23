@@ -1,17 +1,19 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  CHANGE_CITY: 'cities/CHANGE_CITY',
-  FILTERED_OFFERS: 'cities/FILTERED_OFFERS',
-  SET_SORT: 'cities/SET_SORT',
-  LOAD_OFFERS: 'cities/loadOffers',
-  LOAD_ROOM: 'cities/loadRoom',
-  LOAD_OFFERS_NEARBY: 'cities/loadOffersNearby',
-  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
-  SET_LOG_OUT: 'user/setLogOut',
-  SET_USER_DATA: 'user/setUserData',
-  LOAD_REVIEWS: 'user/loadReviews',
+  CHANGE_CITY: 'operation/CHANGE_CITY',
+  FILTERED_OFFERS: 'operation/FILTERED_OFFERS',
+  SET_SORT: 'operation/SET_SORT',
+  LOAD_OFFERS: 'data/loadOffers',
+  LOAD_ROOM: 'data/loadRoom',
+  LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
+  REQUIRED_AUTHORIZATION: 'authorization/requiredAuthorization',
+  SET_LOG_OUT: 'authorization/setLogOut',
+  SET_USER_DATA: 'authorization/setUserData',
+  LOAD_REVIEWS: 'data/loadReviews',
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
+  LOAD_FAVORITES_OFFERS: 'data/loadFavoritesOffers',
+  UPDATE_OFFER: 'data/updateOffer',
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (payload) => ({
@@ -52,7 +54,18 @@ export const setSort = createAction(ActionType.SET_SORT, (sort) => ({
   payload: sort,
 }));
 
+export const incrementActiveOffer = createAction(ActionType.INCREMENT_ACTIVE_OFFER, (id) => ({
+  payload: id,
+}));
+
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
 }));
 
+export const loadFavoritesOffers = createAction(ActionType.LOAD_FAVORITES_OFFERS, (favoritesOffers) => ({
+  payload: favoritesOffers,
+}));
+
+export const updateOffer = createAction(ActionType.UPDATE_OFFER, (offer) => ({
+  payload: offer,
+}));

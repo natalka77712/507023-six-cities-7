@@ -30,3 +30,26 @@ export const setSorting = (offers, sortType) => {
 export const sortDateComments = (a, b) => (
   Date.parse(b.date) - Date.parse(a.date)
 );
+
+export const updateOffers = (offers, payload) => {
+  if (offers.some((offer) => offer.id === payload.id)) {
+    offers.find((offer) => offer.id === payload.id)
+      .isFavorite = payload.isFavorite;
+  }
+  return offers;
+};
+
+export const updateOfferIsFavorite = (offer, payload) => {
+  if (offer.id === payload.id) {
+    offer.isFavorite = payload.isFavorite;
+  }
+  return offer;
+};
+
+export const updateFavoritesOffers = (offers, payload) => {
+  if (payload.isFavorite) {
+    return [...offers, payload];
+  }
+  return offers.filter((offer) => offer.id !== payload.id);
+};
+

@@ -5,9 +5,10 @@ import {
   loadRoom,
   redirectToRoute,
   requireAuthorization,
-  loadReviews, loadOffersNearby, setUserData, setLogOut
+  loadReviews, loadOffersNearby, setUserData, setLogOut, loadFavoritesOffers, updateOffer
 } from './action';
 import {sortDateComments} from '../utils';
+import {NameSpace} from './root-reducer';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -70,3 +71,22 @@ export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) 
       dispatch(loadReviews(sortedComments.map((commentItem) => adaptReviewToClient(commentItem))));
     })
 );
+
+export const fetchFavoritesOffers = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.FAVORITES)
+    .then(({data}) => dispatch(loadFavoritesOffers(data.map(adaptOffersToClient))))
+    .catch(() => dispatch(loadFavoritesOffers([])));
+};
+
+export const setFavorites = ({id, status}) => (dispatch, getState, api) => {
+  const auth = getState()[NameSpace.AUTHORIZATION].authorizationStatus;
+
+  if (auth !== AuthorizationStatus.AUTH) {
+    dispatch(redirectToRoute(Path.LOGIN));
+  } else {
+    api.post(`${APIRoute.FAVORITES}/${id}/${status}`)
+      .then(({data}) => dispatch(updateOffer(adaptOffersToClient(data))))
+      .catch(() => {
+      });
+  }
+};
