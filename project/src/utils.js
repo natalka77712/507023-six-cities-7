@@ -56,3 +56,5 @@ export const validateEmail = (email) => {
   return reg.test(email);
 };
 
+export const validatePassword = (password) => !!password.trim();
+

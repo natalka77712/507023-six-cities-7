@@ -15,15 +15,33 @@ function FormReview ({roomId}) {
 
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState('');
+  const [, setReadonly] = useState(false);
 
   const isButtonDisabled = rating === null || comment.length < REVIEW_SIZING.min
     || comment.length > REVIEW_SIZING.max;
 
-  const onFormSubmit = (evt) => {
-    evt.preventDefault();
-    dispatch(postReview(({id: roomId, comment: comment, rating: rating})));
+  const reset = () => {
+    setReadonly(false);
     setRating(null);
     setComment('');
+  };
+
+  const onFail = () => {
+    setReadonly(false);
+  };
+
+  const onSuccess = () => {
+    reset();
+    setReadonly(false);
+  };
+
+  const onFormSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(postReview(roomId, {comment: comment, rating: rating}))
+      .then(() => onSuccess())
+      .catch(() => {
+        onFail();
+      });
   };
 
   return (

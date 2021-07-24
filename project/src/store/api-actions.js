@@ -5,10 +5,11 @@ import {
   loadRoom,
   redirectToRoute,
   requireAuthorization,
-  loadReviews, loadOffersNearby, setUserData, setLogOut, loadFavoritesOffers, updateOffer
+  loadReviews, loadOffersNearby, setUserData, setLogOut, loadFavoritesOffers, updateOffer, loadErrorMessage
 } from './action';
 import {sortDateComments} from '../utils';
 import {NameSpace} from './root-reducer';
+import {submitFormError} from '../api/api';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -58,11 +59,18 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
     })
 );
 
-export const postReview = ({id, comment, rating}) => (dispatch, _getState, api) => (
+export const postReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating})
     .then(({data}) => {
       const sortedComments = data.sort(sortDateComments);
       dispatch(loadReviews(sortedComments.map((commentItem) => adaptReviewToClient(commentItem))));
+    })
+    .catch((err) => {
+      submitFormError(
+        err, () => {
+          dispatch(loadErrorMessage('Connection error.'));
+        },
+      );
     })
 );
 

@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
-  filteredOffers, loadFavoritesOffers,
+  filteredOffers, loadErrorMessage, loadFavoritesOffers,
   loadOffers,
   loadOffersNearby,
   loadReviews,
@@ -17,6 +17,7 @@ const initialState = {
   isDataLoaded: false,
   isRoomDataLoaded: false,
   isFavoritesLoaded: false,
+  errorMessage: '',
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -48,6 +49,9 @@ const data = createReducer(initialState, (builder) => {
       state.offers = updateOffers(state.offers, action.payload);
       state.favoritesOffers = updateFavoritesOffers(state.favoritesOffers, action.payload);
       state.offersNearby = updateOffers(state.offersNearby, action.payload);
+    })
+    .addCase(loadErrorMessage, (state, action) => {
+      state.errorMessage = String(action.payload);
     });
 });
 

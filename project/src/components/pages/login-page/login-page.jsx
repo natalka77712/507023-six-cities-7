@@ -1,32 +1,49 @@
 import React, {useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
-import {validateEmail} from '../../../utils';
+import {validateEmail, validatePassword} from '../../../utils';
 import Logo from '../../logo/logo';
 
 function LoginPage () {
   const loginRef = useRef();
   const passwordRef = useRef();
+  const formRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
   const {city} = useSelector((state) => state.OPERATION);
 
-  const handleEmailInput = (evt) => {
-    !validateEmail(evt.target.value)
-      ? evt.target.setCustomValidity('Email введён не верно')
-      : evt.target.setCustomValidity('');
+  const onFormChange = () => {
+    loginRef.current.setCustomValidity('');
+    passwordRef.current.setCustomValidity('');
+
+    if (!validateEmail(loginRef.current.value)) {
+      loginRef.current.setCustomValidity('Email was entered incorrectly');
+    }
+
+    if (!validatePassword(passwordRef.current.value)) {
+      passwordRef.current.setCustomValidity('Password should not contain only spaces');
+    }
+
+    formRef.current.reportValidity();
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
     dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
     }));
     history.push(Path.MAIN);
   };
+
+  if (localStorage.token) {
+    return <Redirect to={Path.MAIN} />;
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -52,16 +69,16 @@ function LoginPage () {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form onSubmit={handleSubmit} className="login__form form" action="#" method="post">
+            <form onChange={onFormChange} ref={formRef} className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required onInput={handleEmailInput}/>
+                <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required/>
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button onClick={handleSubmit} className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

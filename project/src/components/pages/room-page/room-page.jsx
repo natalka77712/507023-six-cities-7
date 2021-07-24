@@ -5,6 +5,7 @@ import {fetchOffersNearby, fetchReviews, fetchRoomData} from '../../../store/api
 import LoadingScreen from '../../loading-screen/loading-screen';
 import Property from '../../property/property';
 import Header from '../../header/header';
+import ErrorMessage from '../../error-message/error-message';
 
 function RoomPage() {
   const {id} = useParams();
@@ -25,6 +26,7 @@ function RoomPage() {
 
   return (
     <div className="page">
+      <ErrorMessage />
       <Header/>
 
       <main className="page__main page__main--property">

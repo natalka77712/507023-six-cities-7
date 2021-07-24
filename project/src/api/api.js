@@ -27,7 +27,6 @@ export const createApi = (onUnauthorized) => {
     if (response.status === HttpCode.UNAUTHORIZED) {
       onUnauthorized();
     }
-
     throw err;
   };
 
@@ -41,4 +40,15 @@ export const createApi = (onUnauthorized) => {
   api.interceptors.request.use(onRequest);
 
   return api;
+};
+
+export const submitFormError = (err, submitReview) => {
+  const response = err.response ? err.response.status : err.response;
+
+  if (response === undefined) {
+    submitReview();
+    throw err;
+  }
+
+  throw err;
 };

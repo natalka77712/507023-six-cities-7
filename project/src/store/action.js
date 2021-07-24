@@ -14,6 +14,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'redirect/redirectToRoute',
   LOAD_FAVORITES_OFFERS: 'data/loadFavoritesOffers',
   UPDATE_OFFER: 'data/updateOffer',
+  LOAD_ERROR_MESSAGE: 'data/loadErrorMessage',
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (payload) => ({
@@ -64,4 +65,8 @@ export const loadFavoritesOffers = createAction(ActionType.LOAD_FAVORITES_OFFERS
 
 export const updateOffer = createAction(ActionType.UPDATE_OFFER, (offer) => ({
   payload: offer,
+}));
+
+export const loadErrorMessage = createAction(ActionType.LOAD_ERROR_MESSAGE, (message) => ({
+  payload: message,
 }));
