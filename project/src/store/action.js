@@ -2,7 +2,6 @@ import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
   CHANGE_CITY: 'operation/CHANGE_CITY',
-  FILTERED_OFFERS: 'operation/FILTERED_OFFERS',
   SET_SORT: 'operation/SET_SORT',
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_ROOM: 'data/loadRoom',
@@ -44,10 +43,6 @@ export const loadRoom = createAction(ActionType.LOAD_ROOM, (room) => ({
 }));
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
-  payload: city,
-}));
-
-export const filteredOffers = createAction(ActionType.FILTERED_OFFERS, (city) => ({
   payload: city,
 }));
 

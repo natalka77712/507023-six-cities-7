@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should LoadingScreen render correctly 1`] = `
+<div>
+  <p
+    data-testid="loading"
+  >
+    Loading ...
+  </p>
+</div>
+`;

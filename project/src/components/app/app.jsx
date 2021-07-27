@@ -36,9 +36,17 @@ function App() {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={Path.MAIN} component={Main}/>
-        <Route exact path={Path.LOGIN} component={LoginPage}/>
+        <Route
+          exact
+          path={Path.LOGIN}
+          render={
+            () => (authorizationStatus === AuthorizationStatus.NO_AUTH)
+              ? <LoginPage />
+              : <Redirect to={Path.MAIN} />
+          }
+        />
         <PrivateRoute exact path={Path.FAVORITES} render={() => (<FavoritesPage />)}/>
-        <Route exact path={Path.OFFER} render={()=><RoomPage/>}/>
+        <Route exact path={Path.OFFER} component={RoomPage}/>
         <Route exact path={Path.ERROR} component={PageNotFound}/>
         <Redirect from={'*'} to={Path.ERROR}/>
       </Switch>

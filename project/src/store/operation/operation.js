@@ -5,7 +5,6 @@ import {createReducer} from '@reduxjs/toolkit';
 const initialState = {
   city: 'Paris',
   activeSort: SortType.POPULAR,
-  activeOffer: false,
 };
 
 const operation = createReducer(initialState, (builder) => {

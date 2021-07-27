@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
-  filteredOffers, loadErrorMessage, loadFavoritesOffers,
+  loadErrorMessage, loadFavoritesOffers,
   loadOffers,
   loadOffersNearby,
   loadReviews,
@@ -36,9 +36,6 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffersNearby, (state, action) => {
       state.offersNearby = action.payload;
-    })
-    .addCase(filteredOffers, (state, action) => {
-      state.offers = action.payload;
     })
     .addCase(loadFavoritesOffers, (state, action) => {
       state.favoritesOffers = action.payload;

@@ -21,7 +21,6 @@ function FormReview ({roomId}) {
     || comment.length > REVIEW_SIZING.max;
 
   const reset = () => {
-    setReadonly(false);
     setRating(null);
     setComment('');
   };
@@ -32,7 +31,6 @@ function FormReview ({roomId}) {
 
   const onSuccess = () => {
     reset();
-    setReadonly(false);
   };
 
   const onFormSubmit = (evt) => {

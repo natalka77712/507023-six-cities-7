@@ -2,7 +2,7 @@ import React from 'react';
 
 function LoadingScreen() {
   return (
-    <p>Loading ...</p>
+    <p data-testid="loading">Loading ...</p>
   );
 }
 

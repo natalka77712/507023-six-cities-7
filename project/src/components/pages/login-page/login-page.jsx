@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Path} from '../../../const';
 import {login} from '../../../store/api-actions';
 import {validateEmail, validatePassword} from '../../../utils';
 import Logo from '../../logo/logo';
+import LogOut from '../../log-out/log-out';
 
 function LoginPage () {
   const loginRef = useRef();
@@ -41,27 +42,13 @@ function LoginPage () {
     history.push(Path.MAIN);
   };
 
-  if (localStorage.token) {
-    return <Redirect to={Path.MAIN} />;
-  }
-
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <LogOut/>
           </div>
         </div>
       </header>

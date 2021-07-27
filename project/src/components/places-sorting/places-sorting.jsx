@@ -20,15 +20,15 @@ function PlacesSorting () {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span onClick={handleOpenToggle} className="places__sorting-type" tabIndex="0">
+      <span onClick={handleOpenToggle} className="places__sorting-type" data-testid="sort-type" tabIndex="0">
         {activeSort}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"/>
         </svg>
       </span>
-      <ul className="places__options places__options--custom" ref={selectRef}>
+      <ul data-testid="sort-list" className="places__options places__options--custom" ref={selectRef}>
         {Object.values(SortType).map((sort) => (
-          <li key={sort} onClick={handleSortChange} className={`places__option ${sort === activeSort  ? 'places__option--active' : ''}`} tabIndex="0">{sort}</li>
+          <li key={sort} onClick={handleSortChange} data-testid={sort} className={`places__option ${sort === activeSort  ? 'places__option--active' : ''}`} tabIndex="0">{sort}</li>
         ))}
       </ul>
     </form>

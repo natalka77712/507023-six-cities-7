@@ -8,8 +8,8 @@ import {
   loadReviews, loadOffersNearby, setUserData, setLogOut, loadFavoritesOffers, updateOffer, loadErrorMessage
 } from './action';
 import {sortDateComments} from '../utils';
-import {NameSpace} from './root-reducer';
 import {submitFormError} from '../api/api';
+import {NameSpace} from './root-reducer';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -38,13 +38,13 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(redirectToRoute(Path.MAIN)))
 );
 
-export const fetchRoomData = (id) => (dispatch, _getState, api) => {
+export const fetchRoomData = (id) => (dispatch, _getState, api) =>  (
   api.get(`${APIRoute.OFFERS}/${id}`)
     .then(({data}) => dispatch(loadRoom(adaptOffersToClient(data))))
     .catch(() => {
       dispatch(redirectToRoute(Path.ERROR));
-    });
-};
+    })
+);
 
 export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${id}${APIRoute.NEARBY}`)
@@ -74,11 +74,11 @@ export const postReview = (id, {comment, rating}) => (dispatch, _getState, api) 
     })
 );
 
-export const fetchFavoritesOffers = () => (dispatch, _getState, api) => {
+export const fetchFavoritesOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FAVORITES)
     .then(({data}) => dispatch(loadFavoritesOffers(data.map(adaptOffersToClient))))
-    .catch(() => dispatch(loadFavoritesOffers([])));
-};
+    .catch(() => dispatch(loadFavoritesOffers([])))
+);
 
 export const setFavorites = ({id, status}) => (dispatch, getState, api) => {
   const auth = getState()[NameSpace.AUTHORIZATION].authorizationStatus;
